@@ -1,0 +1,91 @@
+### Variables
+@baseUrl = http://localhost:8000
+@email = testuser@example.com
+@password = SecurePass123!
+
+### 1. Register a new user (Status: 201 Created)
+# @name register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "{{email}}",
+  "phone_number": "+1234567890",
+  "password": "{{password}}"
+}
+
+### Store Token from Registration
+@authToken = {{register.response.body.access_token}}
+
+### 2. Login with that user (Status: 200 OK)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### 3. Get /auth/me with Bearer token (Status: 200 OK)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{authToken}}
+
+### 4. Create an event with Bearer token (Status: 201 Created)
+# @name createEvent
+POST {{baseUrl}}/events
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "Townhall Meeting",
+  "description": "Quarterly community townhall broadcast",
+  "scheduled_start": "2026-10-01T15:00:00Z"
+}
+
+### Store Created Event ID
+@eventId = {{createEvent.response.body.id}}
+
+### 5. List all events (Status: 200 OK)
+GET {{baseUrl}}/events
+Authorization: Bearer {{authToken}}
+
+### 6. Get single event by id (Status: 200 OK)
+GET {{baseUrl}}/events/{{eventId}}
+Authorization: Bearer {{authToken}}
+
+### 7. Join an event (Status: 200 OK)
+POST {{baseUrl}}/events/{{eventId}}/join
+Authorization: Bearer {{authToken}}
+
+### 8. Try joining the same event twice (Status: 200 OK, returns existing record without duplicating)
+POST {{baseUrl}}/events/{{eventId}}/join
+Authorization: Bearer {{authToken}}
+
+### 9. Try registering with duplicate email (Status: 400 Bad Request)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Jane Duplicate",
+  "email": "{{email}}",
+  "phone_number": "+1234567890",
+  "password": "{{password}}"
+}
+
+### 10. Try logging in with wrong password (Status: 401 Unauthorized)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "WrongPassword999!"
+}
+
+### 11. Try accessing /events without a token (Status: 401 Unauthorized)
+GET {{baseUrl}}/events
+
+### 12. Generate LiveKit token for joined event (Status: 200 OK)
+POST {{baseUrl}}/events/{{eventId}}/token
+Authorization: Bearer {{authToken}}
