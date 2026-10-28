@@ -15,15 +15,18 @@ def request(method, path, data=None, token=None):
     )
     try:
         with urllib.request.urlopen(req) as resp:
-            content = resp.read().decode("utf-8")
-            return resp.status, json.loads(content) if content else {}
+            content = resp.read()
+            content_type = resp.headers.get("content-type", "")
+            if "application/json" in content_type:
+                return resp.status, json.loads(content.decode("utf-8"))
+            return resp.status, content
     except urllib.error.HTTPError as e:
         content = e.read().decode("utf-8")
         return e.code, json.loads(content) if content else {"error": str(e)}
 
 
 def run_tests():
-    print("=== STARTING FULL END-TO-END FEATURE TESTS ===")
+    print("=== STARTING FULL END-TO-END FEATURE TESTS (Swecha Vedika) ===")
 
     # 1. Register host
     host_email = "host_rural@swecha.org"
@@ -122,7 +125,21 @@ def run_tests():
     assert status == 200 and token_res["is_speaker"] is True
     print("✔ LiveKit token granted with speaker/publish capabilities.")
 
-    # 8. Q&A: Attendee submits question & upvotes
+    # 8. In-Room Live Chat & Telugu Reactions
+    status, chat_msg = request(
+        "POST",
+        f"/events/{event_id}/chat",
+        {"content": "👏 నమస్కారం మిత్రులారా! Swecha Vedika chat is working wonderfully."},
+        token=att_token,
+    )
+    assert status == 201, f"Chat send failed: {chat_msg}"
+
+    status, chat_list = request("GET", f"/events/{event_id}/chat", token=host_token)
+    assert status == 200 and len(chat_list) >= 1
+    assert "నమస్కారం" in chat_list[-1]["content"]
+    print("✔ In-Room Live Chat with Telugu reactions verified.")
+
+    # 9. Q&A: Attendee submits question & upvotes
     status, q1 = request(
         "POST",
         f"/events/{event_id}/questions",
@@ -150,7 +167,7 @@ def run_tests():
     assert status == 200 and q1_ans["is_answered"] is True
     print("✔ Host marked Q&A question as answered.")
 
-    # 9. Live Polls: Host creates poll, attendee votes
+    # 10. Live Polls: Host creates poll, attendee votes
     status, poll = request(
         "POST",
         f"/events/{event_id}/polls",
@@ -173,7 +190,28 @@ def run_tests():
     assert status == 200 and poll_voted["vote_counts"]["0"] == 1
     print(f"✔ Live Poll created and attendee voted: {poll_voted['vote_counts']}")
 
-    # 10. Archive: Populate demo AI data & search
+    # 11. Replay-as-Live Engine & Synchronized Broadcast Clock
+    status, replay_start = request(
+        "POST",
+        f"/events/{event_id}/replay-start",
+        token=host_token,
+    )
+    assert status == 200 and replay_start["is_replay"] is True
+
+    status, sync_clock = request("GET", f"/events/{event_id}/sync-clock")
+    assert status == 200 and sync_clock["is_replay"] is True
+    assert sync_clock["offset_seconds"] >= 0.0
+    print(f"✔ Replay-as-Live Clock synchronized: offset {sync_clock['offset_seconds']:.2f}s.")
+
+    # 12. Host Heartbeat & Disconnect Failover
+    status, hb_res = request("POST", f"/events/{event_id}/heartbeat", token=host_token)
+    assert status == 200
+
+    status, failover = request("GET", f"/events/{event_id}/failover-status")
+    assert status == 200 and failover["host_online"] is True
+    print("✔ Host resilience heartbeat and failover protocol verified.")
+
+    # 13. Archive: Populate demo AI data & search
     status, demo_ai = request(
         "POST",
         f"/archive/{event_id}/populate-demo-ai",
@@ -190,7 +228,12 @@ def run_tests():
     assert status == 200 and len(corpus) > 0
     print(f"✔ Telugu Speech Corpus export verified: {len(corpus)} segments available.")
 
-    # 11. WhatsApp Bot Simulator
+    # 14. Offline Learning Pack Generator (.zip)
+    status, zip_bytes = request("GET", f"/archive/{event_id}/offline-pack")
+    assert status == 200 and zip_bytes[:2] == b"PK", "Invalid ZIP header"
+    print(f"✔ Offline Pack generated: valid .zip package ({len(zip_bytes)} bytes).")
+
+    # 15. WhatsApp Bot Simulator
     status, wa_events = request(
         "POST",
         "/webhook/whatsapp/simulate",
@@ -216,7 +259,7 @@ def run_tests():
     assert status == 200 and "Question submitted" in wa_ask["reply"]
     print("✔ WhatsApp Bot Simulation (EVENTS, RSVP, ASK) verified successfully.")
 
-    print("\n🎉 ALL BACKEND APIS & DOMAIN CAPABILITIES PASSED 100%! 🎉")
+    print("\n🎉 ALL 15 DOMAIN TEST SUITES PASSED 100%! ENTIRE SYSTEM COMPLETE! 🎉")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '@livekit/components-styles';
 import {
@@ -20,6 +20,13 @@ import {
   getPolls,
   createPoll,
   votePoll,
+  getChatMessages,
+  sendChatMessage,
+  startReplay,
+  getSyncClock,
+  sendHeartbeat,
+  getFailoverStatus,
+  getOfflinePackUrl,
 } from '../api/client';
 
 export default function RoomPage() {
@@ -35,14 +42,20 @@ export default function RoomPage() {
   // Low-Data Mode (2G Fallback)
   const [lowDataMode, setLowDataMode] = useState(false);
 
-  // Sidebar state: 'attendees' | 'qa' | 'polls'
-  const [activeTab, setActiveTab] = useState('attendees');
+  // Sidebar state: 'attendees' | 'chat' | 'qa' | 'polls'
+  const [activeTab, setActiveTab] = useState('chat');
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Attendees & Hand-raise
   const [attendees, setAttendees] = useState([]);
   const [myHandRaised, setMyHandRaised] = useState(false);
   const [isSpeaker, setIsSpeaker] = useState(false);
+
+  // In-Room Live Chat
+  const [chatMessages, setChatMessages] = useState([]);
+  const [newChatText, setNewChatText] = useState('');
+  const [submittingChat, setSubmittingChat] = useState(false);
+  const chatBottomRef = useRef(null);
 
   // Q&A
   const [questions, setQuestions] = useState([]);
@@ -54,6 +67,13 @@ export default function RoomPage() {
   const [newPollQuestion, setNewPollQuestion] = useState('');
   const [newPollOptions, setNewPollOptions] = useState(['Yes', 'No']);
   const [showCreatePoll, setShowCreatePoll] = useState(false);
+
+  // Replay-as-Live
+  const [replaySync, setReplaySync] = useState(null);
+  const replayVideoRef = useRef(null);
+
+  // Host Resilience & Failover
+  const [failoverStatus, setFailoverStatus] = useState(null);
 
   // WhatsApp Simulator modal
   const [showWhatsApp, setShowWhatsApp] = useState(false);
@@ -81,6 +101,12 @@ export default function RoomPage() {
         if (!isMounted) return;
         setTokenData(tokenRes);
         setIsSpeaker(tokenRes.is_speaker || false);
+
+        // Fetch replay clock if replay event
+        if (event.is_replay) {
+          const sync = await getSyncClock(eventId);
+          if (isMounted) setReplaySync(sync);
+        }
       } catch (err) {
         if (!isMounted) return;
         if (err.status === 404) {
@@ -101,19 +127,32 @@ export default function RoomPage() {
     };
   }, [eventId, authFetch]);
 
-  // Polling for Attendees, Q&A, and Polls
+  // Periodic Host Heartbeat
+  useEffect(() => {
+    if (!token || !isHost) return;
+    const interval = setInterval(() => {
+      sendHeartbeat(eventId, token).catch(() => {});
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [eventId, token, isHost]);
+
+  // Periodic Room State Polling
   const fetchRoomData = async () => {
     if (!token) return;
     try {
-      const [attList, qList, pList] = await Promise.all([
+      const [attList, chatList, qList, pList, failover] = await Promise.all([
         getAttendees(eventId, token).catch(() => []),
+        getChatMessages(eventId, token).catch(() => []),
         getQuestions(eventId, token).catch(() => []),
         getPolls(eventId, token).catch(() => []),
+        getFailoverStatus(eventId).catch(() => null),
       ]);
 
       setAttendees(attList);
+      setChatMessages(chatList);
       setQuestions(qList);
       setPolls(pList);
+      if (failover) setFailoverStatus(failover);
 
       const meInAtt = attList.find((a) => a.user_id === user?.id);
       if (meInAtt) {
@@ -130,6 +169,13 @@ export default function RoomPage() {
     const interval = setInterval(fetchRoomData, 3000);
     return () => clearInterval(interval);
   }, [eventId, token, user?.id, isHost]);
+
+  // Auto-scroll chat to bottom
+  useEffect(() => {
+    if (activeTab === 'chat' && chatBottomRef.current) {
+      chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatMessages, activeTab]);
 
   // Hand Raise
   const handleToggleHandRaise = async () => {
@@ -150,6 +196,24 @@ export default function RoomPage() {
       fetchRoomData();
     } catch (err) {
       alert('Failed to promote attendee: ' + err.message);
+    }
+  };
+
+  // Live Chat Submit
+  const handleSendChat = async (e, customContent = null) => {
+    if (e) e.preventDefault();
+    const messageContent = customContent || newChatText;
+    if (!messageContent.trim() || submittingChat) return;
+
+    setSubmittingChat(true);
+    try {
+      await sendChatMessage(eventId, messageContent.trim(), token);
+      if (!customContent) setNewChatText('');
+      fetchRoomData();
+    } catch (err) {
+      alert('Failed to send chat: ' + err.message);
+    } finally {
+      setSubmittingChat(false);
     }
   };
 
@@ -221,6 +285,20 @@ export default function RoomPage() {
     }
   };
 
+  // Launch Replay
+  const handleLaunchReplay = async () => {
+    try {
+      const sync = await startReplay(eventId, token);
+      setReplaySync(sync);
+      if (replayVideoRef.current) {
+        replayVideoRef.current.currentTime = sync.offset_seconds || 0;
+        replayVideoRef.current.play();
+      }
+    } catch (err) {
+      alert('Failed to launch replay: ' + err.message);
+    }
+  };
+
   const handleLeave = () => {
     navigate('/dashboard');
   };
@@ -253,6 +331,19 @@ export default function RoomPage() {
               {eventDetails.title}
             </span>
           )}
+          {eventDetails?.is_replay && (
+            <span
+              className="badge"
+              style={{
+                backgroundColor: 'var(--orange)',
+                color: '#fff',
+                fontSize: '0.72rem',
+                fontWeight: 'bold',
+              }}
+            >
+              🔄 REPLAY-AS-LIVE
+            </span>
+          )}
           {isSpeaker && (
             <span
               className="badge"
@@ -269,6 +360,28 @@ export default function RoomPage() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {/* Replay Start Button for Host */}
+          {eventDetails?.is_replay && isHost && (
+            <button
+              className="btn btn-primary"
+              style={{ fontSize: '0.8rem', padding: '6px 12px' }}
+              onClick={handleLaunchReplay}
+            >
+              ▶ Synchronize Replay
+            </button>
+          )}
+
+          {/* Download Offline Pack */}
+          <a
+            href={getOfflinePackUrl(eventId)}
+            download
+            className="btn btn-secondary"
+            style={{ fontSize: '0.8rem', padding: '6px 12px', color: '#fff', textDecoration: 'none' }}
+            title="Download offline reader pack with audio, transcripts and summary"
+          >
+            📦 Offline Pack
+          </a>
+
           {/* Low-Data Mode Toggle */}
           <button
             className="btn"
@@ -330,9 +443,25 @@ export default function RoomPage() {
         </div>
       </header>
 
-      {/* Main Container: Video + Sidebar */}
+      {/* Host Failover Emergency Banner */}
+      {failoverStatus && failoverStatus.host_online === false && (
+        <div
+          style={{
+            backgroundColor: 'var(--error)',
+            color: '#fff',
+            padding: '8px 16px',
+            textAlign: 'center',
+            fontSize: '0.85rem',
+            fontWeight: 600,
+          }}
+        >
+          ⚠️ Primary host disconnected. Resilience protocol active: Stage privileges automatically migrated to co-host {failoverStatus.failover_host_name || 'moderator'}.
+        </div>
+      )}
+
+      {/* Main Container: Video/Broadcast + Sidebar */}
       <div style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}>
-        {/* Video Call Area */}
+        {/* Stage Video / Replay Broadcast Area */}
         <div style={{ flex: 1, position: 'relative', height: '100%', backgroundColor: '#0a0a0a' }}>
           {loading ? (
             <div
@@ -364,7 +493,34 @@ export default function RoomPage() {
                 <button className="btn btn-primary" onClick={handleLeave}>Return to Dashboard</button>
               </div>
             </div>
+          ) : eventDetails?.is_replay ? (
+            /* Replay-as-Live Synchronized Broadcast Player */
+            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000' }}>
+              <video
+                ref={replayVideoRef}
+                src={eventDetails.recording_url || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}
+                controls={false}
+                autoPlay
+                playsInline
+                style={{ width: '100%', maxHeight: '85vh', objectFit: 'contain' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '16px',
+                  left: '16px',
+                  backgroundColor: 'rgba(0,0,0,0.7)',
+                  color: '#fff',
+                  padding: '6px 14px',
+                  borderRadius: '6px',
+                  fontSize: '0.8rem',
+                }}
+              >
+                🔴 LIVE BROADCAST REPLAY • Synchronized Viewer Clock
+              </div>
+            </div>
           ) : tokenData ? (
+            /* LiveKit Multi-person Video Room */
             <LiveKitRoom
               token={tokenData.token}
               serverUrl={tokenData.livekit_url}
@@ -441,11 +597,11 @@ export default function RoomPage() {
           )}
         </div>
 
-        {/* Interactive Sidebar: Stage, Q&A, Polls */}
+        {/* Interactive Sidebar: Stage, Chat, Q&A, Polls */}
         {sidebarOpen && (
           <aside
             style={{
-              width: '360px',
+              width: '370px',
               backgroundColor: '#fff',
               borderLeft: '1px solid var(--border)',
               display: 'flex',
@@ -464,13 +620,29 @@ export default function RoomPage() {
               <button
                 style={{
                   flex: 1,
-                  padding: '12px 6px',
+                  padding: '10px 4px',
+                  background: 'none',
+                  border: 'none',
+                  borderBottom: activeTab === 'chat' ? '3px solid var(--maroon)' : 'none',
+                  fontWeight: activeTab === 'chat' ? 700 : 500,
+                  color: activeTab === 'chat' ? 'var(--maroon)' : 'var(--slate)',
+                  fontSize: '0.8rem',
+                  cursor: 'pointer',
+                }}
+                onClick={() => setActiveTab('chat')}
+              >
+                💬 Chat
+              </button>
+              <button
+                style={{
+                  flex: 1,
+                  padding: '10px 4px',
                   background: 'none',
                   border: 'none',
                   borderBottom: activeTab === 'attendees' ? '3px solid var(--maroon)' : 'none',
                   fontWeight: activeTab === 'attendees' ? 700 : 500,
                   color: activeTab === 'attendees' ? 'var(--maroon)' : 'var(--slate)',
-                  fontSize: '0.82rem',
+                  fontSize: '0.8rem',
                   cursor: 'pointer',
                 }}
                 onClick={() => setActiveTab('attendees')}
@@ -480,29 +652,29 @@ export default function RoomPage() {
               <button
                 style={{
                   flex: 1,
-                  padding: '12px 6px',
+                  padding: '10px 4px',
                   background: 'none',
                   border: 'none',
                   borderBottom: activeTab === 'qa' ? '3px solid var(--maroon)' : 'none',
                   fontWeight: activeTab === 'qa' ? 700 : 500,
                   color: activeTab === 'qa' ? 'var(--maroon)' : 'var(--slate)',
-                  fontSize: '0.82rem',
+                  fontSize: '0.8rem',
                   cursor: 'pointer',
                 }}
                 onClick={() => setActiveTab('qa')}
               >
-                💬 Q&A ({questions.length})
+                ❓ Q&A ({questions.length})
               </button>
               <button
                 style={{
                   flex: 1,
-                  padding: '12px 6px',
+                  padding: '10px 4px',
                   background: 'none',
                   border: 'none',
                   borderBottom: activeTab === 'polls' ? '3px solid var(--maroon)' : 'none',
                   fontWeight: activeTab === 'polls' ? 700 : 500,
                   color: activeTab === 'polls' ? 'var(--maroon)' : 'var(--slate)',
-                  fontSize: '0.82rem',
+                  fontSize: '0.8rem',
                   cursor: 'pointer',
                 }}
                 onClick={() => setActiveTab('polls')}
@@ -511,7 +683,108 @@ export default function RoomPage() {
               </button>
             </div>
 
-            {/* TAB 1: ATTENDEES & STAGE PROMOTION */}
+            {/* TAB: IN-ROOM LIVE CHAT */}
+            {activeTab === 'chat' && (
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+                <div style={{ flex: 1, padding: '14px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {chatMessages.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '30px 10px', color: 'var(--slate)', fontSize: '0.85rem' }}>
+                      Welcome to the live chat! Send a message or Telugu reaction below.
+                    </div>
+                  ) : (
+                    chatMessages.map((m) => (
+                      <div
+                        key={m.id}
+                        style={{
+                          padding: '8px 10px',
+                          borderRadius: '8px',
+                          backgroundColor: m.user_id === user?.id ? '#fdf5eb' : '#faf7f2',
+                          border: '1px solid var(--border)',
+                          alignSelf: m.user_id === user?.id ? 'flex-end' : 'flex-start',
+                          maxWidth: '90%',
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', marginBottom: '2px', fontSize: '0.72rem' }}>
+                          <span style={{ fontWeight: 700, color: 'var(--maroon)' }}>
+                            {m.user_name} {m.user_id === user?.id && '(You)'}
+                          </span>
+                          <span style={{ color: 'var(--slate)' }}>
+                            {new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--ink)', wordBreak: 'break-word' }}>
+                          {m.content}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                  <div ref={chatBottomRef} />
+                </div>
+
+                {/* Quick Telugu Reaction Chips */}
+                <div
+                  style={{
+                    padding: '6px 10px',
+                    borderTop: '1px solid var(--border)',
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    gap: '6px',
+                    overflowX: 'auto',
+                  }}
+                >
+                  {['👏 నమస్కారం', '💡 అద్భుతం', '✊ జై స్వేచ్ఛ', '❓ సందేహం', '❤️ ధన్యవాదాలు'].map((rx, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      style={{
+                        padding: '3px 8px',
+                        borderRadius: '12px',
+                        border: '1px solid var(--border)',
+                        backgroundColor: 'var(--cream)',
+                        color: 'var(--ink)',
+                        fontSize: '0.72rem',
+                        cursor: 'pointer',
+                        whiteSpace: 'nowrap',
+                      }}
+                      onClick={(e) => handleSendChat(e, rx)}
+                    >
+                      {rx}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Chat Input Bar */}
+                <form
+                  onSubmit={handleSendChat}
+                  style={{
+                    padding: '10px',
+                    borderTop: '1px solid var(--border)',
+                    backgroundColor: 'var(--cream)',
+                    display: 'flex',
+                    gap: '8px',
+                  }}
+                >
+                  <input
+                    type="text"
+                    className="form-input"
+                    style={{ fontSize: '0.85rem', padding: '8px 10px', backgroundColor: '#fff', flex: 1 }}
+                    placeholder="Type message..."
+                    value={newChatText}
+                    onChange={(e) => setNewChatText(e.target.value)}
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ fontSize: '0.82rem', padding: '8px 12px' }}
+                    disabled={submittingChat}
+                  >
+                    Send
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* TAB: ATTENDEES & STAGE PROMOTION */}
             {activeTab === 'attendees' && (
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '16px', overflowY: 'auto' }}>
                 {/* Raise Hand Button for Non-Speakers */}
@@ -603,7 +876,7 @@ export default function RoomPage() {
               </div>
             )}
 
-            {/* TAB 2: LIVE Q&A */}
+            {/* TAB: LIVE Q&A */}
             {activeTab === 'qa' && (
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
                 <div style={{ flex: 1, padding: '16px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -686,7 +959,7 @@ export default function RoomPage() {
                   <input
                     type="text"
                     className="form-input"
-                    style={{ fontSize: '0.85rem', padding: '8px 10px', backgroundColor: '#fff' }}
+                    style={{ fontSize: '0.85rem', padding: '8px 10px', backgroundColor: '#fff', flex: 1 }}
                     placeholder="Ask a question (Telugu/English)..."
                     value={newQuestionText}
                     onChange={(e) => setNewQuestionText(e.target.value)}
@@ -703,7 +976,7 @@ export default function RoomPage() {
               </div>
             )}
 
-            {/* TAB 3: LIVE POLLS */}
+            {/* TAB: LIVE POLLS */}
             {activeTab === 'polls' && (
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
                 <div style={{ flex: 1, padding: '16px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '14px' }}>

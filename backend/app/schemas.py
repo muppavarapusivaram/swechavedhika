@@ -166,3 +166,39 @@ class CorpusExportItem(BaseModel):
     transcript_segment: str
     timestamp_start: float
     timestamp_end: float
+
+
+# Chat Schemas
+class ChatMessageCreate(BaseModel):
+    content: str
+
+
+class ChatMessageOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    event_id: UUID
+    user_id: UUID
+    user_name: str
+    content: str
+    created_at: datetime
+
+
+# Replay & Failover Schemas
+class ReplaySyncOut(BaseModel):
+    event_id: UUID
+    is_replay: bool
+    status: EventStatus
+    recording_url: Optional[str] = None
+    server_time: datetime
+    replay_started_at: Optional[datetime] = None
+    offset_seconds: float = 0.0
+
+
+class FailoverStatusOut(BaseModel):
+    host_online: bool
+    host_id: UUID
+    host_name: str
+    failover_host_id: Optional[UUID] = None
+    failover_host_name: Optional[str] = None
+    seconds_since_heartbeat: Optional[float] = None

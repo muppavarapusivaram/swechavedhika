@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { searchArchive, getCorpus, populateDemoAi } from '../api/client';
+import { searchArchive, getCorpus, populateDemoAi, getOfflinePackUrl } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 
 export default function ArchivePage() {
@@ -225,16 +225,27 @@ export default function ArchivePage() {
                       </p>
                     </div>
 
-                    {!selectedEvent.transcript && token && (
-                      <button
-                        className="btn btn-primary"
-                        style={{ fontSize: '0.8rem', padding: '6px 12px' }}
-                        onClick={() => handlePopulateDemo(selectedEvent.id)}
-                        disabled={actionLoading}
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <a
+                        href={getOfflinePackUrl(selectedEvent.id)}
+                        download
+                        className="btn btn-secondary"
+                        style={{ fontSize: '0.8rem', padding: '6px 12px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}
                       >
-                        ⚡ Generate Telugu ASR & Summary
-                      </button>
-                    )}
+                        📦 Download Offline Pack (.zip)
+                      </a>
+
+                      {!selectedEvent.transcript && token && (
+                        <button
+                          className="btn btn-primary"
+                          style={{ fontSize: '0.8rem', padding: '6px 12px' }}
+                          onClick={() => handlePopulateDemo(selectedEvent.id)}
+                          disabled={actionLoading}
+                        >
+                          ⚡ Generate Telugu ASR & Summary
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   {/* Video Player */}

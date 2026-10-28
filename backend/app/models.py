@@ -65,6 +65,7 @@ class User(Base):
     # Relationships
     hosted_events = relationship(
         "Event",
+        foreign_keys="Event.host_id",
         back_populates="host",
         cascade="all, delete-orphan",
     )
@@ -80,6 +81,11 @@ class User(Base):
     )
     poll_votes = relationship(
         "PollVote",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+    chat_messages = relationship(
+        "ChatMessage",
         back_populates="user",
         cascade="all, delete-orphan",
     )
@@ -126,8 +132,18 @@ class Event(Base):
     summary = Column(Text, nullable=True)
     language = Column(String(50), default="Telugu/English", nullable=False)
 
+    # Replay-as-live & Resilience Failover fields
+    replay_started_at = Column(DateTime(timezone=True), nullable=True)
+    last_host_heartbeat = Column(DateTime(timezone=True), nullable=True)
+    failover_host_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+
     # Relationships
-    host = relationship("User", back_populates="hosted_events")
+    host = relationship("User", foreign_keys=[host_id], back_populates="hosted_events")
+    failover_host = relationship("User", foreign_keys=[failover_host_id])
     attendances = relationship(
         "Attendance",
         back_populates="event",
@@ -140,6 +156,11 @@ class Event(Base):
     )
     polls = relationship(
         "Poll",
+        back_populates="event",
+        cascade="all, delete-orphan",
+    )
+    chat_messages = relationship(
+        "ChatMessage",
         back_populates="event",
         cascade="all, delete-orphan",
     )
@@ -314,3 +335,36 @@ class PollVote(Base):
 
     poll = relationship("Poll", back_populates="votes")
     user = relationship("User", back_populates="poll_votes")
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        index=True,
+    )
+    event_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("events.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    user_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    content = Column(Text, nullable=False)
+    created_at = Column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+
+    # Relationships
+    event = relationship("Event", back_populates="chat_messages")
+    user = relationship("User", back_populates="chat_messages")

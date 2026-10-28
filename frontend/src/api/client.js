@@ -133,3 +133,39 @@ export const simulateWhatsApp = (message, phone = '+919876543210', name = 'Villa
     method: 'POST',
     data: { message, phone, name },
   });
+
+
+// In-Room Live Chat APIs
+export const getChatMessages = (eventId, token) =>
+  apiFetch(`/events/${eventId}/chat`, { token });
+
+export const sendChatMessage = (eventId, content, token) =>
+  apiFetch(`/events/${eventId}/chat`, {
+    method: 'POST',
+    data: { content },
+    token,
+  });
+
+// Replay-as-Live & Clock Synchronization
+export const startReplay = (eventId, token) =>
+  apiFetch(`/events/${eventId}/replay-start`, {
+    method: 'POST',
+    token,
+  });
+
+export const getSyncClock = (eventId) =>
+  apiFetch(`/events/${eventId}/sync-clock`);
+
+// Host Heartbeat & Disconnect Failover
+export const sendHeartbeat = (eventId, token) =>
+  apiFetch(`/events/${eventId}/heartbeat`, {
+    method: 'POST',
+    token,
+  });
+
+export const getFailoverStatus = (eventId) =>
+  apiFetch(`/events/${eventId}/failover-status`);
+
+// Offline Pack Download URL
+export const getOfflinePackUrl = (eventId) =>
+  `${BACKEND_URL}/archive/${eventId}/offline-pack`;

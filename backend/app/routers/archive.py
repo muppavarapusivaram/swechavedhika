@@ -180,3 +180,142 @@ def populate_demo_ai_data(
     db.commit()
     db.refresh(event)
     return event
+
+
+import io
+import json
+import zipfile
+from fastapi import Response
+
+
+@router.get("/{event_id}/offline-pack")
+def generate_offline_pack(
+    event_id: uuid.UUID,
+    db: Session = Depends(get_db),
+):
+    """
+    Generates a self-contained offline learning bundle (.zip) for rural schools and disconnected learners.
+    Contains: index.html (standalone viewer), summary.md, transcript.json, metadata.json.
+    """
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Event not found",
+        )
+
+    # Prepare offline files in memory
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+        # 1. Metadata
+        metadata = {
+            "id": str(event.id),
+            "title": event.title,
+            "description": event.description,
+            "host": event.host.name if event.host else "Swecha Volunteer",
+            "scheduled_start": event.scheduled_start.isoformat(),
+            "language": event.language,
+            "exported_at": "2026-10-28T20:00:00Z",
+            "offline_version": "1.0.0",
+        }
+        zip_file.writestr("metadata.json", json.dumps(metadata, indent=2))
+
+        # 2. Markdown summary
+        summary_text = event.summary or SAMPLE_SUMMARY
+        md_content = f"# {event.title}\n\n**Host**: {metadata['host']}\n**Language**: {event.language}\n\n## Summary & Action Points\n\n{summary_text}\n"
+        zip_file.writestr("summary.md", md_content)
+
+        # 3. Transcript JSON
+        transcript_data = event.transcript or SAMPLE_TELUGU_TRANSCRIPT
+        zip_file.writestr("transcript.json", json.dumps(transcript_data, indent=2, ensure_ascii=False))
+
+        # 4. Standalone Offline Reader index.html (Works 100% offline without internet!)
+        offline_html = f"""<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <title>Swecha Vedika — Offline Pack: {event.title}</title>
+  <style>
+    body {{
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background-color: #FBF5EA;
+      color: #2B211A;
+      line-height: 1.6;
+    }}
+    .header {{
+      background-color: #7A1F1A;
+      color: white;
+      padding: 20px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }}
+    .card {{
+      background: white;
+      border: 1px solid #E4D6C3;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }}
+    .summary-box {{
+      background-color: #fef9f1;
+      border-left: 4px solid #C9962F;
+      padding: 16px;
+      border-radius: 4px;
+      white-space: pre-line;
+    }}
+    .transcript-item {{
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }}
+    .speaker {{
+      font-weight: bold;
+      color: #7A1F1A;
+      font-size: 0.9em;
+    }}
+    .badge {{
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #D9622B;
+      color: white;
+      font-size: 0.8em;
+    }}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="badge">OFFLINE BUNDLE</span>
+    <h1 style="margin: 8px 0 4px 0;">🚩 {event.title}</h1>
+    <p style="margin: 0; opacity: 0.9;">స్వేచ్ఛ వేదిక డిజిటల్ రిసోర్స్ ప్యాక్ (Offline Learning Pack)</p>
+  </div>
+
+  <div class="card">
+    <h2>💡 Key Takeaways & Telugu AI Summary</h2>
+    <div class="summary-box">{summary_text}</div>
+  </div>
+
+  <div class="card">
+    <h2>🎙️ Full Bilingual Transcript ({event.language})</h2>
+    <div id="transcript-container">
+      {"".join([f'<div class="transcript-item"><div class="speaker">{seg.get("speaker", "Speaker")} [{seg.get("start", 0)}s - {seg.get("end", 0)}s]</div><div>{seg.get("text", "")}</div></div>' for seg in transcript_data])}
+    </div>
+  </div>
+
+  <footer style="text-align: center; color: #5C4C3E; font-size: 0.85em; margin-top: 40px;">
+    Swecha Vedika Open Source Platform • Designed for Rural Community Education & Free Software Outreach
+  </footer>
+</body>
+</html>"""
+        zip_file.writestr("index.html", offline_html)
+
+    zip_buffer.seek(0)
+    return Response(
+        content=zip_buffer.getvalue(),
+        media_type="application/zip",
+        headers={
+            "Content-Disposition": f'attachment; filename="swecha_offline_pack_{str(event.id)[:8]}.zip"'
+        },
+    )

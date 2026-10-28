@@ -5,6 +5,7 @@ from sqlalchemy import text
 from app.database import engine
 from app.routers.archive import router as archive_router
 from app.routers.auth import router as auth_router
+from app.routers.chat import router as chat_router
 from app.routers.events import router as events_router
 from app.routers.polls import router as polls_router
 from app.routers.qa import router as qa_router
@@ -30,6 +31,7 @@ app.include_router(auth_router)
 app.include_router(events_router)
 app.include_router(qa_router)
 app.include_router(polls_router)
+app.include_router(chat_router)
 app.include_router(archive_router)
 app.include_router(whatsapp_router)
 
@@ -53,6 +55,7 @@ def db_health_check(response: Response):
             attendance_count = connection.execute(text("SELECT count(*) FROM attendance")).scalar() or 0
             questions_count = connection.execute(text("SELECT count(*) FROM questions")).scalar() or 0
             polls_count = connection.execute(text("SELECT count(*) FROM polls")).scalar() or 0
+            chat_count = connection.execute(text("SELECT count(*) FROM chat_messages")).scalar() or 0
 
         return {
             "status": "ok",
@@ -63,6 +66,7 @@ def db_health_check(response: Response):
                 "attendance": attendance_count,
                 "questions": questions_count,
                 "polls": polls_count,
+                "chat_messages": chat_count,
             },
         }
     except Exception as exc:

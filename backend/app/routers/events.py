@@ -13,8 +13,10 @@ from app.schemas import (
     AttendanceOut,
     EventCreate,
     EventOut,
+    FailoverStatusOut,
     HandRaiseUpdate,
     LiveKitTokenResponse,
+    ReplaySyncOut,
     StagePromotion,
 )
 
@@ -270,4 +272,151 @@ def get_event_token(
         livekit_url=LIVEKIT_URL,
         room_name=room_name,
         is_speaker=bool(is_speaker),
+    )
+
+
+@router.post("/{event_id}/replay-start", response_model=ReplaySyncOut)
+def start_replay(
+    event_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Event not found",
+        )
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+
+    event.is_replay = True
+    event.status = EventStatus.LIVE
+    event.replay_started_at = now
+    if not event.recording_url:
+        event.recording_url = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+
+    db.commit()
+    db.refresh(event)
+
+    return ReplaySyncOut(
+        event_id=event.id,
+        is_replay=event.is_replay,
+        status=event.status,
+        recording_url=event.recording_url,
+        server_time=now,
+        replay_started_at=event.replay_started_at,
+        offset_seconds=0.0,
+    )
+
+
+@router.get("/{event_id}/sync-clock", response_model=ReplaySyncOut)
+def get_sync_clock(
+    event_id: uuid.UUID,
+    db: Session = Depends(get_db),
+):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Event not found",
+        )
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+
+    offset_seconds = 0.0
+    if event.is_replay and event.replay_started_at:
+        offset_seconds = max(0.0, (now - event.replay_started_at).total_seconds())
+
+    return ReplaySyncOut(
+        event_id=event.id,
+        is_replay=event.is_replay,
+        status=event.status,
+        recording_url=event.recording_url,
+        server_time=now,
+        replay_started_at=event.replay_started_at,
+        offset_seconds=offset_seconds,
+    )
+
+
+@router.post("/{event_id}/heartbeat")
+def send_heartbeat(
+    event_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Event not found",
+        )
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+
+    # Only record if sender is host or current failover host
+    if current_user.id == event.host_id or current_user.id == event.failover_host_id:
+        event.last_host_heartbeat = now
+        db.commit()
+
+    return {"status": "ok", "timestamp": now.isoformat()}
+
+
+@router.get("/{event_id}/failover-status", response_model=FailoverStatusOut)
+def get_failover_status(
+    event_id: uuid.UUID,
+    db: Session = Depends(get_db),
+):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Event not found",
+        )
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+
+    seconds_since = None
+    host_online = True
+    if event.last_host_heartbeat:
+        seconds_since = (now - event.last_host_heartbeat).total_seconds()
+        # If host missed heartbeat for > 30 seconds, trigger failover candidate
+        if seconds_since > 30:
+            host_online = False
+            if not event.failover_host_id:
+                # Find an active speaker or attendee to assume co-host role
+                candidate = (
+                    db.query(Attendance)
+                    .filter(
+                        Attendance.event_id == event_id,
+                        Attendance.user_id != event.host_id,
+                        Attendance.left_at.is_(None),
+                    )
+                    .order_by(Attendance.is_speaker.desc(), Attendance.joined_at.asc())
+                    .first()
+                )
+                if candidate:
+                    event.failover_host_id = candidate.user_id
+                    db.commit()
+    else:
+        # No heartbeats yet recorded
+        host_online = True
+
+    failover_user = (
+        db.query(User).filter(User.id == event.failover_host_id).first()
+        if event.failover_host_id
+        else None
+    )
+
+    return FailoverStatusOut(
+        host_online=host_online,
+        host_id=event.host_id,
+        host_name=event.host.name if event.host else "Host",
+        failover_host_id=event.failover_host_id,
+        failover_host_name=failover_user.name if failover_user else None,
+        seconds_since_heartbeat=seconds_since,
     )
