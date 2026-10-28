@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import RoomPage from './pages/RoomPage';
+import ArchivePage from './pages/ArchivePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
 
@@ -42,6 +43,14 @@ export default function App() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/archive"
+        element={
+          <ProtectedRoute>
+            <ArchivePage />
           </ProtectedRoute>
         }
       />

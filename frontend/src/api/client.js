@@ -50,3 +50,86 @@ export async function apiFetch(path, { method = 'GET', data, token, headers = {}
 
   return responseData;
 }
+
+// Event & Attendee APIs
+export const getAttendees = (eventId, token) =>
+  apiFetch(`/events/${eventId}/attendees`, { token });
+
+export const raiseHand = (eventId, handRaised, token) =>
+  apiFetch(`/events/${eventId}/raise-hand`, {
+    method: 'POST',
+    data: { hand_raised: handRaised },
+    token,
+  });
+
+export const promoteSpeaker = (eventId, userId, isSpeaker, token) =>
+  apiFetch(`/events/${eventId}/promote-speaker`, {
+    method: 'POST',
+    data: { user_id: userId, is_speaker: isSpeaker },
+    token,
+  });
+
+// Q&A APIs
+export const getQuestions = (eventId, token) =>
+  apiFetch(`/events/${eventId}/questions`, { token });
+
+export const submitQuestion = (eventId, content, token) =>
+  apiFetch(`/events/${eventId}/questions`, {
+    method: 'POST',
+    data: { content },
+    token,
+  });
+
+export const upvoteQuestion = (eventId, questionId, token) =>
+  apiFetch(`/events/${eventId}/questions/${questionId}/upvote`, {
+    method: 'POST',
+    token,
+  });
+
+export const markQuestionAnswered = (eventId, questionId, token) =>
+  apiFetch(`/events/${eventId}/questions/${questionId}/answer`, {
+    method: 'POST',
+    token,
+  });
+
+// Live Poll APIs
+export const getPolls = (eventId, token) =>
+  apiFetch(`/events/${eventId}/polls`, { token });
+
+export const createPoll = (eventId, pollData, token) =>
+  apiFetch(`/events/${eventId}/polls`, {
+    method: 'POST',
+    data: pollData,
+    token,
+  });
+
+export const votePoll = (eventId, pollId, optionIndex, token) =>
+  apiFetch(`/events/${eventId}/polls/${pollId}/vote`, {
+    method: 'POST',
+    data: { option_index: optionIndex },
+    token,
+  });
+
+// Archive & Multilingual APIs
+export const searchArchive = (q = '', language = '') => {
+  const params = new URLSearchParams();
+  if (q) params.append('q', q);
+  if (language) params.append('language', language);
+  const queryStr = params.toString() ? `?${params.toString()}` : '';
+  return apiFetch(`/archive/search${queryStr}`);
+};
+
+export const getCorpus = () => apiFetch('/archive/corpus');
+
+export const populateDemoAi = (eventId, token) =>
+  apiFetch(`/archive/${eventId}/populate-demo-ai`, {
+    method: 'POST',
+    token,
+  });
+
+// WhatsApp Bot Simulator API
+export const simulateWhatsApp = (message, phone = '+919876543210', name = 'Village Volunteer') =>
+  apiFetch('/webhook/whatsapp/simulate', {
+    method: 'POST',
+    data: { message, phone, name },
+  });
