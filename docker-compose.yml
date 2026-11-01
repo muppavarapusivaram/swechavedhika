@@ -75,6 +75,7 @@ services:
       - "${FRONTEND_PORT:-5173}:5173"
     volumes:
       - ./frontend/src:/app/src
+      - ./frontend/vite.config.js:/app/vite.config.js
     networks:
       - prototype-net
 
