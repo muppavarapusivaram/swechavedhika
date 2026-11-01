@@ -252,12 +252,13 @@ def get_event_token(
     )
     is_speaker = is_host or (attendance and attendance.is_speaker)
 
-    room_name = str(event.id)
+    # Allow all participants to publish mic and camera by default for demo and testing
     grants = VideoGrants(
         room_join=True,
         room=room_name,
-        can_publish=bool(is_speaker),
+        can_publish=True,
         can_subscribe=True,
+        can_publish_data=True,
     )
 
     token = (
