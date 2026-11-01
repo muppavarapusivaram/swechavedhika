@@ -16,6 +16,7 @@ from app.schemas import (
     FailoverStatusOut,
     HandRaiseUpdate,
     LiveKitTokenResponse,
+    LiveTranscriptSegment,
     ReplaySyncOut,
     StagePromotion,
 )
@@ -420,3 +421,30 @@ def get_failover_status(
         failover_host_name=failover_user.name if failover_user else None,
         seconds_since_heartbeat=seconds_since,
     )
+
+
+@router.post("/{event_id}/live-transcript")
+def add_live_transcript(
+    event_id: uuid.UUID,
+    segment: LiveTranscriptSegment,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Event not found",
+        )
+
+    current_transcript = list(event.transcript or [])
+    current_transcript.append({
+        "speaker": segment.speaker or current_user.name,
+        "text": segment.text,
+        "start": segment.start,
+        "end": segment.end,
+        "language": segment.language,
+    })
+    event.transcript = current_transcript
+    db.commit()
+    return {"status": "ok", "segments_count": len(current_transcript)}

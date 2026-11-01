@@ -169,3 +169,12 @@ export const getFailoverStatus = (eventId) =>
 // Offline Pack Download URL
 export const getOfflinePackUrl = (eventId) =>
   `${BACKEND_URL}/archive/${eventId}/offline-pack`;
+
+
+// Live Audio Transcription API
+export const saveLiveTranscript = (eventId, segment, token) =>
+  apiFetch(`/events/${eventId}/live-transcript`, {
+    method: 'POST',
+    data: segment,
+    token,
+  });

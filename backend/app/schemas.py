@@ -202,3 +202,12 @@ class FailoverStatusOut(BaseModel):
     failover_host_id: Optional[UUID] = None
     failover_host_name: Optional[str] = None
     seconds_since_heartbeat: Optional[float] = None
+
+
+# Live Transcription Schema
+class LiveTranscriptSegment(BaseModel):
+    speaker: Optional[str] = None
+    text: str
+    start: float = 0.0
+    end: float = 0.0
+    language: str = "te"

@@ -27,6 +27,7 @@ import {
   sendHeartbeat,
   getFailoverStatus,
   getOfflinePackUrl,
+  saveLiveTranscript,
 } from '../api/client';
 
 export default function RoomPage() {
@@ -80,6 +81,12 @@ export default function RoomPage() {
 
   // P2P Mesh Telemetry HUD toggle
   const [showTelemetry, setShowTelemetry] = useState(true);
+
+  // Live Speech Recognition & Closed Captions
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [liveCaption, setLiveCaption] = useState('');
+  const [captionLang, setCaptionLang] = useState('te-IN');
+  const recognitionRef = useRef(null);
 
   const isHost = eventDetails && user && eventDetails.host_id === user.id;
 
@@ -176,6 +183,94 @@ export default function RoomPage() {
       chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [chatMessages, activeTab]);
+
+  // Cleanup speech recognition on unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
+
+  // Live Speech Recognition & Transcription Toggle
+  const toggleLiveTranscription = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Live Speech Recognition is not supported by this browser. Please use Google Chrome or Microsoft Edge.');
+      return;
+    }
+
+    if (isTranscribing) {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+        recognitionRef.current = null;
+      }
+      setIsTranscribing(false);
+      setLiveCaption('');
+    } else {
+      try {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = captionLang;
+
+        recognition.onstart = () => {
+          setIsTranscribing(true);
+          setLiveCaption('🎙️ Microphone active. Speak now in ' + (captionLang === 'te-IN' ? 'Telugu' : 'English') + '...');
+        };
+
+        recognition.onresult = (event) => {
+          let interimTranscript = '';
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            const transcriptText = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              setLiveCaption(transcriptText);
+              // Save live spoken sentence to database
+              if (token) {
+                saveLiveTranscript(
+                  eventId,
+                  {
+                    speaker: user?.name || 'Live Speaker',
+                    text: transcriptText,
+                    language: captionLang.startsWith('te') ? 'te' : 'en',
+                    start: 0,
+                    end: 0,
+                  },
+                  token
+                ).catch(() => {});
+              }
+            } else {
+              interimTranscript += transcriptText;
+              setLiveCaption(interimTranscript);
+            }
+          }
+        };
+
+        recognition.onerror = (event) => {
+          console.error('Speech recognition error:', event.error);
+          if (event.error === 'not-allowed') {
+            alert('Microphone permission was denied. Please allow microphone access in your browser to test live transcription.');
+            setIsTranscribing(false);
+          }
+        };
+
+        recognition.onend = () => {
+          if (recognitionRef.current) {
+            try {
+              recognition.start();
+            } catch (e) {}
+          }
+        };
+
+        recognition.start();
+        recognitionRef.current = recognition;
+      } catch (err) {
+        alert('Could not start speech recognition: ' + err.message);
+        setIsTranscribing(false);
+      }
+    }
+  };
 
   // Hand Raise
   const handleToggleHandRaise = async () => {
@@ -381,6 +476,45 @@ export default function RoomPage() {
           >
             📦 Offline Pack
           </a>
+
+          {/* Live Captions Speech-to-Text Toggle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <button
+              className="btn"
+              style={{
+                fontSize: '0.8rem',
+                padding: '6px 11px',
+                backgroundColor: isTranscribing ? '#2E6B3E' : 'rgba(255,255,255,0.12)',
+                color: '#fff',
+                border: isTranscribing ? '1.5px solid #55ff55' : '1px solid rgba(255,255,255,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+              onClick={toggleLiveTranscription}
+              title="Speak into your microphone and see real-time speech-to-text captions"
+            >
+              <span>🎙️</span> {isTranscribing ? 'Captions: ON' : 'Live Captions'}
+            </button>
+            <select
+              style={{
+                fontSize: '0.74rem',
+                padding: '5px 4px',
+                backgroundColor: '#2b211a',
+                color: '#fff',
+                border: '1px solid rgba(255,255,255,0.25)',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+              value={captionLang}
+              onChange={(e) => setCaptionLang(e.target.value)}
+              disabled={isTranscribing}
+              title="Select spoken language for transcription"
+            >
+              <option value="te-IN">తెలుగు (Telugu)</option>
+              <option value="en-IN">English</option>
+            </select>
+          </div>
 
           {/* Low-Data Mode Toggle */}
           <button
@@ -593,6 +727,60 @@ export default function RoomPage() {
               <div>Bandwidth Saved: <strong style={{ color: 'var(--gold)' }}>68.4%</strong></div>
               <div>Peer Connections: <strong>{attendees.length > 1 ? attendees.length : 3} WebRTC nodes</strong></div>
               <div>Stream Bitrate: <strong>{lowDataMode ? '44.8 kbps (Audio Only)' : '240 kbps'}</strong></div>
+            </div>
+          )}
+
+          {/* Real-time Live Speech-to-Text Subtitle Overlay */}
+          {isTranscribing && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '88px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: 'rgba(16, 12, 10, 0.92)',
+                backdropFilter: 'blur(10px)',
+                color: '#FFFFFF',
+                padding: '12px 24px',
+                borderRadius: '12px',
+                maxWidth: '82%',
+                minWidth: '320px',
+                textAlign: 'center',
+                zIndex: 35,
+                border: '1.5px solid var(--gold)',
+                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.75)',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  fontSize: '0.74rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.5px',
+                  color: 'var(--gold)',
+                  marginBottom: '5px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ff4444', animation: 'pulse 1.5s infinite' }}></span>
+                🎙️ Live Transcription • {captionLang === 'te-IN' ? 'Telugu (తెలుగు)' : 'English (India)'}
+              </div>
+              <div
+                style={{
+                  fontSize: '1.15rem',
+                  fontWeight: 600,
+                  color: '#FFFFFF',
+                  lineHeight: 1.45,
+                  textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                  wordBreak: 'break-word',
+                }}
+              >
+                {liveCaption || 'Listening to your microphone... Speak clearly.'}
+              </div>
             </div>
           )}
         </div>
