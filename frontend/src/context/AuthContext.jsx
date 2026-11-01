@@ -4,23 +4,36 @@ import { apiFetch } from '../api/client';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(null);
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(() => localStorage.getItem('swecha_token'));
+  const [user, setUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('swecha_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   const [loading, setLoading] = useState(false);
 
   const logout = useCallback(() => {
+    localStorage.removeItem('swecha_token');
+    localStorage.removeItem('swecha_user');
     setToken(null);
     setUser(null);
   }, []);
 
   const login = useCallback(async (newToken) => {
     setToken(newToken);
+    localStorage.setItem('swecha_token', newToken);
     setLoading(true);
     try {
       const userData = await apiFetch('/auth/me', { token: newToken });
       setUser(userData);
+      localStorage.setItem('swecha_user', JSON.stringify(userData));
       return userData;
     } catch (err) {
+      localStorage.removeItem('swecha_token');
+      localStorage.removeItem('swecha_user');
       setToken(null);
       setUser(null);
       throw err;

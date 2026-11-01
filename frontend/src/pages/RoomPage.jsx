@@ -89,6 +89,7 @@ export default function RoomPage() {
   const recognitionRef = useRef(null);
 
   const isHost = eventDetails && user && eventDetails.host_id === user.id;
+  const [retryKey, setRetryKey] = useState(0);
 
   // Initial Room Setup
   useEffect(() => {
@@ -132,7 +133,7 @@ export default function RoomPage() {
     return () => {
       isMounted = false;
     };
-  }, [eventId, authFetch]);
+  }, [eventId, authFetch, retryKey]);
 
   // Periodic Host Heartbeat
   useEffect(() => {
@@ -624,7 +625,14 @@ export default function RoomPage() {
                 <div style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--error)' }}>⚠️</div>
                 <h3 style={{ marginBottom: '8px', color: 'var(--ink)' }}>Connection Issue</h3>
                 <p style={{ color: 'var(--slate)', fontSize: '0.9rem', marginBottom: '20px' }}>{error}</p>
-                <button className="btn btn-primary" onClick={handleLeave}>Return to Dashboard</button>
+                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                  <button className="btn btn-primary" onClick={() => setRetryKey((k) => k + 1)}>
+                    🔄 Retry Connection
+                  </button>
+                  <button className="btn btn-secondary" onClick={handleLeave}>
+                    Return to Dashboard
+                  </button>
+                </div>
               </div>
             </div>
           ) : eventDetails?.is_replay ? (
