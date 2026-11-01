@@ -1,15 +1,15 @@
 # Swecha Vedika: A Bandwidth-Frugal, Multilingual Live Stage and Knowledge Dissemination Platform for Resource-Constrained Civic Ecosystems
 
 **Conference / Capstone Track**: SAMYAK-2026 Capstone Project Expo & Conference  
-**Department**: Department of Computer Science and Engineering, Koneru Lakshmaiah Education Foundation (K L Deemed to be University), Vaddeswaram, Guntur, Andhra Pradesh, India  
+**Department**: Department of CSE - ELGE, Koneru Lakshmaiah Education Foundation (K L Deemed to be University), Vaddeswaram, Guntur, Andhra Pradesh, India  
 **Affiliated Community**: Open Source Community (KLUG) in collaboration with Swecha / Free Software Movement India (FSMI)  
 
 ---
 
 ## Authors & Affiliation
-* **Primary Student Investigator & Developer**: Muppavarapu Sivaram (Reg. No: Capstone-2026-CSE)
-* **Co-Investigators**: Capstone Project Team Members, Department of CSE, K L Deemed to be University
-* **Faculty Project Supervisor & Guide**: Dr. / Prof. Faculty Guide, Department of Computer Science and Engineering, K L University
+* **Primary Student Investigator & Developer**: Muppavarapu Sivaram (ID: 2300030447)
+* **Co-Investigator**: Meda Lohith Pavan Kumar (ID: 2300030921)
+* **Faculty Project Supervisor & Guide**: Dr. Koganti Sripath Roy, Department of CSE - ELGE, K L Deemed to be University
 
 ---
 

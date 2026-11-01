@@ -13,10 +13,10 @@
 * **Project Title**: **SWECHA VEDIKA (స్వేచ్ఛ వేదిక)**  
 * **Subtitle**: *A Bandwidth-Frugal, Multilingual Live Stage and Knowledge Dissemination Platform for Resource-Constrained Civic Ecosystems*  
 * **Student Team Details**:
-  * **Lead Presenter & Architect**: Muppavarapu Sivaram (Reg No: Capstone-2026-CSE)
-  * **Team Members**: Capstone Team CSE-2026
-* **Academic Department**: Department of Computer Science and Engineering, K L Deemed to be University, Vaddeswaram, Guntur, AP  
-* **Faculty Project Supervisor & Guide**: Dr. / Prof. Faculty Guide, Department of CSE, K L University  
+  * **Muppavarapu Sivaram** (ID: 2300030447)
+  * **Meda Lohith Pavan Kumar** (ID: 2300030921)
+* **Academic Department**: Department of CSE - ELGE, Koneru Lakshmaiah Education Foundation (K L Deemed to be University), Vaddeswaram, Guntur, AP  
+* **Faculty Project Supervisor & Guide**: Dr. Koganti Sripath Roy, Department of CSE - ELGE, K L University  
 * **Community Partner**: Swecha / Free Software Movement India (FSMI)  
 
 ---

@@ -35,9 +35,9 @@ To fulfill the SAMYAK-2026 requirement that *"Every team member must have a clea
 
 | Team Role | Lead Assignee | Expo Responsibilities |
 | :--- | :--- | :--- |
-| **Architect & Lead Presenter** | Muppavarapu Sivaram | Introduces the problem statement, high-level distributed architecture, LiveKit SFU design, and answers evaluators' core technical questions. |
-| **Media & Network Specialist** | Team Member 2 | Demonstrates the **LiveKit Two-Way Video Stage**, **2G Low-Data Fallback Mode**, and **P2P Mesh Telemetry HUD**; explains WebRTC bitrates and packet loss benchmarks. |
-| **Stage & Interactivity Lead** | Team Member 3 | Operates the **Live Q&A Upvote Queue**, **Community Polls**, **Hand-Raising & Stage Speaker Promotion**, and **In-Room Live Chat with Telugu Reactions**. |
+| **Lead Architect & Presenter** | Muppavarapu Sivaram (ID: 2300030447) | Introduces the problem statement, high-level distributed architecture, LiveKit SFU design, 2G Low-Data mode, and defends core technical evaluator questions. |
+| **Co-Presenter & Platform Specialist** | Meda Lohith Pavan Kumar (ID: 2300030921) | Operates the **LiveKit Stage Video Call**, **Stage Q&A & Polls**, **WhatsApp Bot Simulator**, **Telugu Whisper Archive**, and **Offline .ZIP Pack**. |
+| **Project Supervisor & Guide** | Dr. Koganti Sripath Roy | Professor, Department of CSE - ELGE, K L Deemed to be University |
 | **Conversational & Archive Lead** | Team Member 4 | Demonstrates the **WhatsApp "Front Door" Bot Simulator**, **Whisper Bilingual Search**, **Telugu Speech Corpus JSON Export**, and **Offline .ZIP Learning Pack**. |
 
 ---
