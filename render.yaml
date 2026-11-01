@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: swecha-vedika-backend
+    env: python
+    region: singapore
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: ./entrypoint.sh
+    envVars:
+      - key: POSTGRES_HOST
+        sync: false
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: POSTGRES_DB
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: LIVEKIT_API_KEY
+        value: devkey
+      - key: LIVEKIT_API_SECRET
+        value: secret
+      - key: LIVEKIT_URL
+        value: wss://demo.livekit.cloud
