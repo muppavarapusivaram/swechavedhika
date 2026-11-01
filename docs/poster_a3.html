@@ -6,14 +6,37 @@
   <style>
     @page {
       size: A3 landscape;
-      margin: 0;
+      margin: 0 !important;
+    }
+
+    @media print {
+      @page {
+        size: A3 landscape;
+        margin: 0 !important;
+      }
+      html, body {
+        width: 420mm !important;
+        height: 297mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      header {
+        width: 420mm !important;
+        margin: 0 !important;
+      }
+      main {
+        width: 420mm !important;
+      }
     }
 
     :root {
       --kl-maroon: #7A1F1A;
       --kl-gold: #C9962F;
       --dark-maroon: #5C1712;
-      --text-color: #222222;
+      --text-color: #1A1A1A;
       --heading-color: #000000;
       --border-gray: #CCCCCC;
     }
@@ -24,7 +47,7 @@
       padding: 0;
     }
 
-    body {
+    html, body {
       width: 420mm;
       height: 297mm;
       max-width: 420mm;
@@ -33,47 +56,46 @@
       font-family: Arial, Helvetica, sans-serif;
       color: var(--text-color);
       line-height: 1.35;
-      padding: 8mm 10mm;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      margin: 0;
+      padding: 0;
       overflow: hidden;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
     /* ========================================================
-       TOP HEADER (Matches Official SAMYAK Template Exactly)
+       TOP HEADER (Full bleed horizontal maroon banner)
     ======================================================== */
     header {
+      width: 420mm;
+      height: 46mm;
       background-color: var(--kl-maroon);
-      border-bottom: 4px solid var(--kl-gold);
-      height: 38mm;
+      border-bottom: 5px solid var(--kl-gold);
       display: flex;
       align-items: center;
-      padding: 0 16px;
-      border-radius: 4px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      padding: 0 16mm;
+      margin: 0;
+      box-sizing: border-box;
       position: relative;
     }
 
     /* White rounded box for KL University Logo */
     .logo-container {
       background-color: #FFFFFF;
-      border-radius: 8px;
-      padding: 4px 8px;
+      border-radius: 6px;
+      padding: 3px 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 30mm;
-      width: 62mm;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      height: 35mm;
+      width: 68mm;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
       flex-shrink: 0;
     }
 
     .logo-container img {
-      max-height: 26mm;
-      max-width: 58mm;
+      max-height: 31mm;
+      max-width: 64mm;
       object-fit: contain;
     }
 
@@ -82,48 +104,49 @@
       flex: 1;
       text-align: center;
       color: #FFFFFF;
-      padding: 0 14px;
+      padding: 0 16px;
     }
 
     h1.poster-title {
       font-family: Arial, sans-serif;
-      font-size: 21pt;
+      font-size: 22pt;
       font-weight: 900;
       letter-spacing: -0.2px;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
       color: #FFFFFF;
       line-height: 1.15;
     }
 
     .poster-authors {
-      font-size: 11pt;
+      font-size: 11.5pt;
       font-weight: bold;
       color: #FFFFFF;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .poster-supervisor {
-      font-size: 10pt;
-      color: #F7D7B5;
+      font-size: 10.5pt;
+      color: #FCE8D3;
     }
 
     /* ========================================================
-       3-COLUMN BODY LAYOUT (Matches Official Template Exactly)
+       3-COLUMN BODY LAYOUT (Fills exactly 251mm height)
     ======================================================== */
     main {
-      flex: 1;
+      width: 420mm;
+      height: calc(297mm - 46mm);
+      padding: 6mm 14mm 8mm 14mm;
       display: grid;
-      grid-template-columns: 1fr 1.6fr 1fr;
-      gap: 7mm;
-      margin-top: 5mm;
-      margin-bottom: 2mm;
-      height: calc(297mm - 48mm);
+      grid-template-columns: 1fr 1.62fr 1fr;
+      gap: 9mm;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .column {
       display: flex;
       flex-direction: column;
-      gap: 4mm;
+      justify-content: space-between;
       height: 100%;
     }
 
@@ -134,49 +157,48 @@
       background-color: var(--kl-maroon);
       color: #FFFFFF;
       text-align: center;
-      padding: 4px 0;
+      padding: 5px 0;
       font-family: Arial, sans-serif;
-      font-size: 11.5pt;
+      font-size: 12pt;
       font-weight: bold;
       border-radius: 4px;
-      margin-bottom: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
       letter-spacing: 0.3px;
     }
 
     .content-block {
       background-color: #FFFFFF;
-      padding: 2px 4px;
-      flex: 1;
+      padding: 2px 2px;
     }
 
     h3.subheading {
       font-family: Arial, sans-serif;
-      font-size: 10.5pt;
+      font-size: 11pt;
       font-weight: bold;
       color: #000000;
-      margin-top: 4px;
+      margin-top: 5px;
       margin-bottom: 3px;
     }
 
     p {
-      font-size: 8.8pt;
+      font-size: 9.2pt;
       color: #222222;
       text-align: justify;
-      line-height: 1.3;
+      line-height: 1.34;
       margin-bottom: 5px;
     }
 
     ul {
-      padding-left: 15px;
+      padding-left: 17px;
       margin-bottom: 5px;
     }
 
     li {
-      font-size: 8.6pt;
+      font-size: 9pt;
       color: #222222;
-      margin-bottom: 2.5px;
-      line-height: 1.25;
+      margin-bottom: 3.5px;
+      line-height: 1.3;
     }
 
     /* ========================================================
@@ -185,73 +207,74 @@
     .figures-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3.5mm;
-      margin: 4px 0;
+      gap: 4mm;
+      margin: 4px 0 6px 0;
     }
 
     .figure-box {
       border: 1px solid var(--border-gray);
       background-color: #FAFAFA;
-      padding: 3px;
-      border-radius: 3px;
+      padding: 4px;
+      border-radius: 4px;
       text-align: center;
     }
 
     .figure-box img {
       width: 100%;
-      height: 38mm;
+      height: 42mm;
       object-fit: cover;
-      border-radius: 2px;
+      border-radius: 3px;
       display: block;
       border: 1px solid #E0E0E0;
     }
 
     .figure-caption {
-      font-size: 7.2pt;
+      font-size: 7.8pt;
       font-weight: bold;
-      color: #333333;
-      margin-top: 2px;
+      color: #222222;
+      margin-top: 3px;
       line-height: 1.15;
     }
 
     .figure-subtext {
-      font-size: 6.8pt;
-      color: #666666;
+      font-size: 7.1pt;
+      color: #555555;
       line-height: 1.1;
+      margin-top: 1px;
     }
 
     /* Small Data Tables */
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 7.8pt;
-      margin: 3px 0;
+      font-size: 8.2pt;
+      margin: 4px 0;
     }
 
     th {
-      background-color: #F0F0F0;
+      background-color: #EFEFEF;
       color: #000000;
       font-weight: bold;
-      border: 1px solid #D0D0D0;
-      padding: 2.5px 4px;
+      border: 1px solid #CCCCCC;
+      padding: 3.5px 5px;
       text-align: left;
     }
 
     td {
-      border: 1px solid #E0E0E0;
-      padding: 2px 4px;
+      border: 1px solid #DDDDDD;
+      padding: 3px 5px;
     }
 
     /* Reference & Acknowledgement style */
     .ref-list {
-      font-size: 7.2pt;
-      line-height: 1.2;
+      font-size: 7.6pt;
+      line-height: 1.25;
       color: #444444;
     }
 
     .ref-list p {
-      font-size: 7.2pt;
-      margin-bottom: 2.5px;
+      font-size: 7.6pt;
+      margin-bottom: 3px;
       text-align: left;
     }
   </style>
@@ -259,7 +282,7 @@
 <body>
 
   <!-- ========================================================
-       HEADER: EXACT SAMYAK-2026 TEMPLATE FORMAT
+       HEADER: FULL-WIDTH HORIZONTAL MAROON BANNER
   ======================================================== -->
   <header>
     <!-- Official KL Logo Box on Left -->
@@ -271,7 +294,7 @@
     <div class="header-text">
       <h1 class="poster-title">SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM</h1>
       <div class="poster-authors">
-        Muppavarapu Sivaram (2300030447), Meda Lohith Pavan Kumar (2300030921)
+        Names and ID Numbers of Students: Muppavarapu Sivaram (2300030447), Meda Lohith Pavan Kumar (2300030921)
       </div>
       <div class="poster-supervisor">
         Name of the Supervisor: Dr. Koganti Sripath Roy, Department of CSE - ELGE, KL University
@@ -280,7 +303,7 @@
   </header>
 
   <!-- ========================================================
-       BODY: EXACT 3-COLUMN STRUCTURE FROM TEMPLATE
+       BODY: EXACT 3-COLUMN STRUCTURE (NO MARGIN VOID)
   ======================================================== -->
   <main>
 
@@ -288,7 +311,7 @@
     <div class="column">
       
       <!-- Section 1: Introduction -->
-      <div>
+      <div style="flex: 1.1;">
         <div class="section-banner">Introduction</div>
         <div class="content-block">
           <h3 class="subheading">Objective of your work</h3>
@@ -309,7 +332,7 @@
       </div>
 
       <!-- Section 2: Methods -->
-      <div style="flex: 1;">
+      <div style="flex: 1.1;">
         <div class="section-banner">Methods</div>
         <div class="content-block">
           <h3 class="subheading">Methods and Materials</h3>
@@ -331,9 +354,9 @@
     <!-- ==================== COLUMN 2 (CENTER) ==================== -->
     <div class="column">
       <div class="section-banner">Block Diagram, Flowchart, Models, Results</div>
-      <div class="content-block" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="content-block" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
         
-        <p style="font-size: 8.5pt; margin-bottom: 4px;">
+        <p style="font-size: 8.9pt; margin-bottom: 4px;">
           The implementation results confirm that Swecha Vedika maintains reliable two-way presentation and one-to-many broadcasting over restricted mobile data while slashing server egress bandwidth. Below are the actual operational screenshots and modules of our deployed platform:
         </p>
 
@@ -371,7 +394,7 @@
         </div>
 
         <!-- Empirical Results Table -->
-        <h3 class="subheading" style="margin-top: 3px; font-size: 9.5pt;">Experimental Benchmarks & Comparative Performance</h3>
+        <h3 class="subheading" style="margin-top: 2px; font-size: 10.2pt;">Experimental Benchmarks & Comparative Performance</h3>
         <table>
           <thead>
             <tr>
@@ -422,7 +445,7 @@
     <div class="column">
       
       <!-- Section 4: Conclusion -->
-      <div>
+      <div style="flex: 1.1;">
         <div class="section-banner">Conclusion</div>
         <div class="content-block">
           <h3 class="subheading">Discussion/Conclusion</h3>
@@ -443,7 +466,7 @@
       </div>
 
       <!-- Section 5: References and Affiliations -->
-      <div style="flex: 1;">
+      <div style="flex: 1.1;">
         <div class="section-banner">References and Affiliations</div>
         <div class="content-block">
           <h3 class="subheading">References</h3>
@@ -456,7 +479,7 @@
           </div>
 
           <h3 class="subheading" style="margin-top: 6px;">Acknowledgements</h3>
-          <p style="font-size: 7.6pt; line-height: 1.25; color: #555555;">
+          <p style="font-size: 7.9pt; line-height: 1.25; color: #555555;">
             We sincerely express our gratitude to the Department of CSE - ELGE, Koneru Lakshmaiah Education Foundation (K L Deemed to be University), our respected Project Supervisor Dr. Koganti Sripath Roy, and the leadership of Swecha and the Free Software Movement India (FSMI) for their mentorship, infrastructure, and community support.
           </p>
         </div>
