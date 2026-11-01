@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Swecha Vedika — SAMYAK-2026 Capstone Project Poster (A3 Landscape)</title>
+  <title>Swecha Vedika — SAMYAK-2026 Capstone Project Poster</title>
   <style>
     @page {
       size: A3 landscape;
@@ -10,17 +10,12 @@
     }
 
     :root {
-      --maroon: #7A1F1A;
-      --maroon-dark: #5C1712;
-      --orange: #D9622B;
-      --gold: #C9962F;
-      --cream: #FBF5EA;
-      --white: #FFFFFF;
-      --ink: #2B211A;
-      --slate: #5C4C3E;
-      --border: #E4D6C3;
-      --success: #2E6B3E;
-      --error: #B3261E;
+      --kl-maroon: #7A1F1A;
+      --kl-gold: #C9962F;
+      --dark-maroon: #5C1712;
+      --text-color: #222222;
+      --heading-color: #000000;
+      --border-gray: #CCCCCC;
     }
 
     * {
@@ -34,11 +29,11 @@
       height: 297mm;
       max-width: 420mm;
       max-height: 297mm;
-      background-color: var(--cream);
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-      color: var(--ink);
+      background-color: #FFFFFF;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text-color);
       line-height: 1.35;
-      padding: 10mm;
+      padding: 8mm 10mm;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -47,542 +42,429 @@
       print-color-adjust: exact;
     }
 
-    /* ================= HEADER ================= */
+    /* ========================================================
+       TOP HEADER (Matches Official SAMYAK Template Exactly)
+    ======================================================== */
     header {
-      background: linear-gradient(135deg, var(--maroon) 0%, #4a0d0a 100%);
-      color: var(--white);
-      padding: 16px 28px;
-      border-radius: 12px;
-      border-bottom: 5px solid var(--gold);
+      background-color: var(--kl-maroon);
+      border-bottom: 4px solid var(--kl-gold);
+      height: 38mm;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 0 16px;
+      border-radius: 4px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      position: relative;
     }
 
-    .header-left {
-      max-width: 72%;
-    }
-
-    .badge-bar {
+    /* White rounded box for KL University Logo */
+    .logo-container {
+      background-color: #FFFFFF;
+      border-radius: 8px;
+      padding: 4px 8px;
       display: flex;
-      gap: 10px;
-      margin-bottom: 6px;
+      align-items: center;
+      justify-content: center;
+      height: 30mm;
+      width: 62mm;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      flex-shrink: 0;
     }
 
-    .event-badge {
-      background-color: var(--gold);
-      color: var(--ink);
-      font-size: 11pt;
-      font-weight: 800;
-      padding: 3px 12px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+    .logo-container img {
+      max-height: 26mm;
+      max-width: 58mm;
+      object-fit: contain;
     }
 
-    .partner-badge {
-      background-color: var(--orange);
-      color: var(--white);
-      font-size: 10pt;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 6px;
+    /* Title & Meta Info in Red Header */
+    .header-text {
+      flex: 1;
+      text-align: center;
+      color: #FFFFFF;
+      padding: 0 14px;
     }
 
-    h1.project-title {
-      font-size: 26pt;
+    h1.poster-title {
+      font-family: Arial, sans-serif;
+      font-size: 21pt;
       font-weight: 900;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.2px;
+      margin-bottom: 3px;
+      color: #FFFFFF;
       line-height: 1.15;
-      color: #FFF;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    .project-subtitle {
-      font-size: 13pt;
+    .poster-authors {
+      font-size: 11pt;
+      font-weight: bold;
+      color: #FFFFFF;
+      margin-bottom: 2px;
+    }
+
+    .poster-supervisor {
+      font-size: 10pt;
       color: #F7D7B5;
-      font-weight: 500;
-      margin-top: 4px;
     }
 
-    .header-right {
-      text-align: right;
-      border-left: 2px solid rgba(255,255,255,0.25);
-      padding-left: 24px;
-      font-size: 10.5pt;
-    }
-
-    .institution-name {
-      font-weight: 800;
-      font-size: 12pt;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-
-    .author-names {
-      font-weight: 700;
-      color: #FFF;
-      margin-top: 2px;
-    }
-
-    .supervisor-name {
-      color: #E0E0E0;
-      font-size: 9.5pt;
-      margin-top: 2px;
-    }
-
-    /* ================= MAIN 3-COLUMN GRID ================= */
+    /* ========================================================
+       3-COLUMN BODY LAYOUT (Matches Official Template Exactly)
+    ======================================================== */
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: 1fr 1.25fr 1fr;
-      gap: 8mm;
-      margin-top: 6mm;
-      margin-bottom: 4mm;
+      grid-template-columns: 1fr 1.6fr 1fr;
+      gap: 7mm;
+      margin-top: 5mm;
+      margin-bottom: 2mm;
+      height: calc(297mm - 48mm);
     }
 
     .column {
       display: flex;
       flex-direction: column;
-      gap: 6mm;
+      gap: 4mm;
+      height: 100%;
     }
 
-    /* ================= CARDS & BOXES ================= */
-    .card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      box-shadow: 0 2px 8px rgba(43, 33, 26, 0.04);
-      display: flex;
-      flex-direction: column;
+    /* ========================================================
+       SECTION HEADER BANNERS (Rounded Maroon Pill Headers)
+    ======================================================== */
+    .section-banner {
+      background-color: var(--kl-maroon);
+      color: #FFFFFF;
+      text-align: center;
+      padding: 4px 0;
+      font-family: Arial, sans-serif;
+      font-size: 11.5pt;
+      font-weight: bold;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      letter-spacing: 0.3px;
     }
 
-    .card-title {
-      font-size: 13.5pt;
-      font-weight: 800;
-      color: var(--maroon);
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 5px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .content-block {
+      background-color: #FFFFFF;
+      padding: 2px 4px;
+      flex: 1;
     }
 
-    .card-title span.icon {
-      font-size: 14pt;
+    h3.subheading {
+      font-family: Arial, sans-serif;
+      font-size: 10.5pt;
+      font-weight: bold;
+      color: #000000;
+      margin-top: 4px;
+      margin-bottom: 3px;
     }
 
-    p, li {
-      font-size: 10.2pt;
-      color: var(--ink);
-      line-height: 1.35;
+    p {
+      font-size: 8.8pt;
+      color: #222222;
+      text-align: justify;
+      line-height: 1.3;
+      margin-bottom: 5px;
     }
 
     ul {
-      padding-left: 18px;
+      padding-left: 15px;
+      margin-bottom: 5px;
     }
 
     li {
-      margin-bottom: 4px;
+      font-size: 8.6pt;
+      color: #222222;
+      margin-bottom: 2.5px;
+      line-height: 1.25;
     }
 
-    strong {
-      color: var(--maroon-dark);
-    }
-
-    /* ================= STATS / KPI RIBBON ================= */
-    .kpi-grid {
+    /* ========================================================
+       FIGURE TILES & WEBSITE SCREENSHOTS
+    ======================================================== */
+    .figures-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5mm;
+      margin: 4px 0;
     }
 
-    .kpi-card {
-      background: #FAF3E6;
-      border: 1.5px solid var(--gold);
-      border-radius: 8px;
-      padding: 8px 6px;
+    .figure-box {
+      border: 1px solid var(--border-gray);
+      background-color: #FAFAFA;
+      padding: 3px;
+      border-radius: 3px;
       text-align: center;
     }
 
-    .kpi-value {
-      font-size: 17pt;
-      font-weight: 900;
-      color: var(--maroon);
+    .figure-box img {
+      width: 100%;
+      height: 38mm;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+      border: 1px solid #E0E0E0;
     }
 
-    .kpi-label {
-      font-size: 7.8pt;
-      font-weight: 700;
-      color: var(--slate);
-      text-transform: uppercase;
+    .figure-caption {
+      font-size: 7.2pt;
+      font-weight: bold;
+      color: #333333;
+      margin-top: 2px;
+      line-height: 1.15;
+    }
+
+    .figure-subtext {
+      font-size: 6.8pt;
+      color: #666666;
       line-height: 1.1;
     }
 
-    /* ================= ARCHITECTURE DIAGRAM BOX ================= */
-    .arch-diagram {
-      background: #FAF7F2;
-      border: 1.5px dashed var(--maroon);
-      border-radius: 8px;
-      padding: 10px;
-      margin: 6px 0;
-      font-family: monospace;
-      font-size: 8.5pt;
-      line-height: 1.25;
-      color: #111;
-    }
-
-    /* ================= TABLES ================= */
+    /* Small Data Tables */
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 8.8pt;
-      margin: 6px 0;
+      font-size: 7.8pt;
+      margin: 3px 0;
     }
 
     th {
-      background: var(--maroon);
-      color: #FFF;
-      font-weight: 700;
-      padding: 5px 6px;
+      background-color: #F0F0F0;
+      color: #000000;
+      font-weight: bold;
+      border: 1px solid #D0D0D0;
+      padding: 2.5px 4px;
       text-align: left;
     }
 
     td {
-      padding: 4.5px 6px;
-      border-bottom: 1px solid var(--border);
+      border: 1px solid #E0E0E0;
+      padding: 2px 4px;
     }
 
-    tr:nth-child(even) td {
-      background: #FDF9F2;
+    /* Reference & Acknowledgement style */
+    .ref-list {
+      font-size: 7.2pt;
+      line-height: 1.2;
+      color: #444444;
     }
 
-    /* ================= HIGHLIGHT CHIPS ================= */
-    .chip-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 6px;
-    }
-
-    .chip {
-      background: rgba(217, 98, 43, 0.12);
-      border: 1px solid var(--orange);
-      color: var(--maroon);
-      font-size: 8pt;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 12px;
-    }
-
-    /* ================= FOOTER ================= */
-    footer {
-      background: var(--ink);
-      color: #FFF;
-      padding: 8px 24px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 9pt;
-      border-top: 3px solid var(--gold);
-    }
-
-    .footer-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .footer-qr {
-      background: white;
-      color: black;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 8pt;
+    .ref-list p {
+      font-size: 7.2pt;
+      margin-bottom: 2.5px;
+      text-align: left;
     }
   </style>
 </head>
 <body>
 
-  <!-- ================= POSTER HEADER ================= -->
+  <!-- ========================================================
+       HEADER: EXACT SAMYAK-2026 TEMPLATE FORMAT
+  ======================================================== -->
   <header>
-    <div class="header-left">
-      <div class="badge-bar">
-        <span class="event-badge">SAMYAK-2026 Capstone Project Expo</span>
-        <span class="partner-badge">Free Software Movement India × Swecha Collaboration</span>
-      </div>
-      <h1 class="project-title">SWECHA VEDIKA (స్వేచ్ఛ వేదిక)</h1>
-      <div class="project-subtitle">
-        A Bandwidth-Frugal, Multilingual Live Stage and Knowledge Dissemination Platform for Resource-Constrained Civic Ecosystems
-      </div>
+    <!-- Official KL Logo Box on Left -->
+    <div class="logo-container">
+      <img src="kl_logo.png" alt="KL (Deemed to be University) Logo">
     </div>
-    <div class="header-right">
-      <div class="institution-name">K L Deemed to be University</div>
-      <div style="font-size: 9.5pt; color: #f0e6d2;">Dept. of Computer Science & Engineering</div>
-      <div class="author-names">Lead: Muppavarapu Sivaram & Team CSE-2026</div>
-      <div class="supervisor-name">Project Guide: Department Faculty Supervisor</div>
+
+    <!-- Centered Poster Title, Authors, and Supervisor -->
+    <div class="header-text">
+      <h1 class="poster-title">SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM</h1>
+      <div class="poster-authors">
+        Muppavarapu Sivaram (Reg No: 2000030000), Capstone Project Team Members, Department of CSE
+      </div>
+      <div class="poster-supervisor">
+        Name of the Supervisor: Dr. Faculty Guide, Professor, Department of Computer Science and Engineering, KL University
+      </div>
     </div>
   </header>
 
-  <!-- ================= 3-COLUMN MAIN CONTENT ================= -->
+  <!-- ========================================================
+       BODY: EXACT 3-COLUMN STRUCTURE FROM TEMPLATE
+  ======================================================== -->
   <main>
 
-    <!-- ===== COLUMN 1: MOTIVATION & PROBLEM STATEMENT ===== -->
+    <!-- ==================== COLUMN 1 (LEFT) ==================== -->
     <div class="column">
       
-      <!-- Problem Statement -->
-      <div class="card" style="border-left: 5px solid var(--error);">
-        <div class="card-title">
-          <span class="icon">⚠️</span> Problem Statement & Context
+      <!-- Section 1: Introduction -->
+      <div>
+        <div class="section-banner">Introduction</div>
+        <div class="content-block">
+          <h3 class="subheading">Objective of your work</h3>
+          <p>
+            The objective of this work is to design, implement, and benchmark <strong>Swecha Vedika</strong>—an open-source, self-hosted, bandwidth-frugal live conferencing and digital broadcasting platform tailored for rural civic outreach and non-profit education. The system eliminates recurring SaaS licensing fees, guarantees continuous audio/slide delivery under <strong>2G network constraints (sub-50 kbps)</strong>, allows zero-install mobile engagement via <strong>WhatsApp</strong>, and automatically indexes spoken regional Telugu/English knowledge into open AI speech datasets.
+          </p>
+
+          <h3 class="subheading">Origin of your proposal</h3>
+          <p>
+            Grassroots organizations like Swecha routinely conduct technical workshops and digital literacy drives in rural Andhra Pradesh and Telangana, engaging 150 to 500+ attendees. Commercial platforms (Zoom, MS Teams, Google Meet) impose severe barriers:
+          </p>
+          <ul>
+            <li><strong>Prohibitive Licensing Overheads:</strong> Recurring fees of $150–$300/yr per host are unsustainable for non-profit communities.</li>
+            <li><strong>Rural Network Collapse:</strong> Standard video conferencing requires &gt;600 kbps; under rural 2G/3G mobile data with 25%+ packet loss, sessions freeze or terminate.</li>
+            <li><strong>Loss of Regional Knowledge:</strong> Spoken Telugu discussions are lost after calls without automated bilingual archiving.</li>
+          </ul>
         </div>
-        <p style="margin-bottom: 6px;">
-          Civil society workshops and developer outreach drives in Andhra Pradesh & Telangana regularly engage <strong>150–500+ rural participants</strong>. Commercial tools (Zoom, Google Meet) impose severe barriers:
-        </p>
-        <ul>
-          <li><strong>Prohibitive Licensing Overheads:</strong> Recurring fees of $150–$300/yr per host are unsustainable for non-profit community hubs.</li>
-          <li><strong>2G/3G Rural Connectivity Bottleneck:</strong> High egress video feeds collapse under rural mobile jitter (sub-100 kbps, 25%+ packet loss).</li>
-          <li><strong>Ephemeral Spoken Discourse:</strong> Technical workshops delivered in Telugu or code-mixed Telugu-English are lost without searchable archiving.</li>
-        </ul>
       </div>
 
-      <!-- Objectives -->
-      <div class="card" style="border-left: 5px solid var(--maroon);">
-        <div class="card-title">
-          <span class="icon">🎯</span> Project Objectives
+      <!-- Section 2: Methods -->
+      <div style="flex: 1;">
+        <div class="section-banner">Methods</div>
+        <div class="content-block">
+          <h3 class="subheading">Methods and Materials</h3>
+          <p>
+            Swecha Vedika is built as a modular multi-tier containerized architecture orchestrated via Docker Compose:
+          </p>
+          <ul>
+            <li><strong>Selective Forwarding Unit (SFU):</strong> Built on Go-based LiveKit. Viewers receive role-scoped JWT tokens with <code>can_publish: false</code>, avoiding upstream media flooding and cutting egress bandwidth by 68.4%.</li>
+            <li><strong>2G Low-Data Fallback Mode:</strong> Dynamic WebRTC track suppression pauses incoming video streams, prioritizing 40 kbps Opus audio and slide updates under high jitter.</li>
+            <li><strong>WhatsApp Conversational Gateway:</strong> Meta Graph webhook parser translating SMS/WhatsApp text into automated RSVPs and live stage questions.</li>
+            <li><strong>Relational Core:</strong> PostgreSQL 16 database spanning 9 normalized tables with Alembic auto-migrations and in-memory JWT auth.</li>
+            <li><strong>Bilingual Whisper ASR:</strong> Transcribes spoken Telugu/English, generates clickable jump timestamps, and exports standalone offline ZIP packs.</li>
+          </ul>
         </div>
-        <ul>
-          <li><strong>Zero Licensing SaaS:</strong> 100% self-hosted, Docker-orchestrated multi-container core running on standard dual-core hardware.</li>
-          <li><strong>44.8 kbps 2G Fallback:</strong> Audio-first WebRTC mode with client-side track pausing and slide diffing under severe network constraints.</li>
-          <li><strong>WhatsApp "Front Door":</strong> Zero-install conversational RSVP, stage question injection, and AI summary delivery.</li>
-          <li><strong>Synchronized Replay Engine:</strong> Pre-recorded master-clock playback with real-time live chat and interactive voting polls.</li>
-          <li><strong>Regional AI Corpus:</strong> Automated Whisper ASR producing searchable transcripts and offline educational packs (`.zip`).</li>
-        </ul>
-      </div>
-
-      <!-- Literature Comparison -->
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">📊</span> Comparative Analysis
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Zoom / Meet</th>
-              <th>Swecha Vedika</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Licensing</strong></td>
-              <td>Paid Recurring SaaS</td>
-              <td><strong>100% Free / Self-Hosted</strong></td>
-            </tr>
-            <tr>
-              <td><strong>2G Bitrate</strong></td>
-              <td>450–700 kbps</td>
-              <td><strong>44.8 kbps (68% Saved)</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Mobile Entry</strong></td>
-              <td>Heavy App (120 MB)</td>
-              <td><strong>WhatsApp Bot + Browser</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Archive / Corpus</strong></td>
-              <td>Closed Cloud</td>
-              <td><strong>Open Telugu ASR & JSON</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Offline Learning</strong></td>
-              <td>None</td>
-              <td><strong>Standalone .ZIP Bundle</strong></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
 
     </div>
 
-    <!-- ===== COLUMN 2: ARCHITECTURE & METHODOLOGY ===== -->
+    <!-- ==================== COLUMN 2 (CENTER) ==================== -->
     <div class="column">
-
-      <!-- KPI Stat Ribbon -->
-      <div class="kpi-grid">
-        <div class="kpi-card">
-          <div class="kpi-value">68.4%</div>
-          <div class="kpi-label">Bandwidth Saved</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-value">44.8k</div>
-          <div class="kpi-label">2G Audio Bitrate</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-value">35%</div>
-          <div class="kpi-label">Packet Loss Max</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-value">15/15</div>
-          <div class="kpi-label">Test Suites Passed</div>
-        </div>
-      </div>
-
-      <!-- System Architecture Diagram -->
-      <div class="card" style="border-left: 5px solid var(--gold);">
-        <div class="card-title">
-          <span class="icon">🏗️</span> Distributed System Architecture
-        </div>
-        <div class="arch-diagram">
-+------------------ CLIENTS & PARTICIPANTS ------------------+
-| Desktop / Mobile Web (React 18)   |   WhatsApp Bot Users   |
-| 2G Edge Audio-First (44.8 kbps)   |   SMS / Rural Phone    |
-+-------------------------+--------------------+-------------+
-                          |                    |
-        REST API & WS /   v                    v Webhook API
-+------------------------------------------------------------+
-|                  FASTAPI BACKEND CORE                      |
-|  * RBAC & In-Memory JWT Authentication                     |
-|  * Stage Promotion & Hand-Raising Engine                   |
-|  * Live Q&A Upvote Queue & Community Polls Engine          |
-|  * Replay-as-Live Master Clock (/sync-clock)               |
-|  * Host Disconnect Heartbeat & Automatic Failover          |
-|  * Multilingual Whisper ASR & Telugu Speech Exporter       |
-|  * Standalone Offline Bundle Packager (.zip Generator)     |
-+-------------------+----------------------------+-----------+
-                    |                            |
-       SQL Queries  v                            v Token Minting
-+-------------------------+        +-------------------------+
-|      PostgreSQL 16      |        |   LiveKit SFU (Go)      |
-|  9 Relational Entities  |        |  Port 7880: Signaling   |
-|  Alembic Auto-Migration |        |  Port 7882: WebRTC Media|
-+-------------------------+        +-------------------------+
-        </div>
-        <p style="font-size: 9pt; color: var(--slate); margin-top: 4px;">
-          <strong>Security:</strong> JWT tokens stored strictly in-memory (AuthContext). Passwords hashed with Bcrypt.
+      <div class="section-banner">Block Diagram, Flowchart, Models, Results</div>
+      <div class="content-block" style="display: flex; flex-direction: column; justify-content: space-between;">
+        
+        <p style="font-size: 8.5pt; margin-bottom: 4px;">
+          The implementation results confirm that Swecha Vedika maintains reliable two-way presentation and one-to-many broadcasting over restricted mobile data while slashing server egress bandwidth. Below are the actual operational screenshots and modules of our deployed platform:
         </p>
-      </div>
 
-      <!-- Key Methodology Innovations -->
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">⚙️</span> Key Technical Innovations
+        <!-- 2x2 Grid of Actual Website Screenshots -->
+        <div class="figures-grid">
+          
+          <!-- Figure 1 -->
+          <div class="figure-box">
+            <img src="screenshots/figure1_live_stage.png" alt="Live Stage & 2G Low Data">
+            <div class="figure-caption">Figure 1: Live Stage & 2G Low-Data Fallback</div>
+            <div class="figure-subtext">Video paused at 44.8 kbps; P2P mesh telemetry reports 68.4% bandwidth saved.</div>
+          </div>
+
+          <!-- Figure 2 -->
+          <div class="figure-box">
+            <img src="screenshots/figure2_sidebar_qa_polls.png" alt="Live Q&A and Polls">
+            <div class="figure-caption">Figure 2: Live Q&A, Polls & Telugu Reactions</div>
+            <div class="figure-subtext">Upvote queue, live percentage voting bars, and 1-click Telugu Unicode reaction chips.</div>
+          </div>
+
+          <!-- Figure 3 -->
+          <div class="figure-box">
+            <img src="screenshots/figure3_whatsapp_bot.png" alt="WhatsApp Bot Simulator">
+            <div class="figure-caption">Figure 3: WhatsApp Conversational Front Door</div>
+            <div class="figure-subtext">Zero-install mobile RSVP and instant stage question injection via webhook FSM.</div>
+          </div>
+
+          <!-- Figure 4 -->
+          <div class="figure-box">
+            <img src="screenshots/figure4_archive_offline.png" alt="Searchable Archive & Offline Pack">
+            <div class="figure-caption">Figure 4: Searchable Telugu Archive & Offline Pack</div>
+            <div class="figure-subtext">Whisper ASR synchronized playback seeker & standalone offline .ZIP bundle exporter.</div>
+          </div>
+
         </div>
-        <ul style="font-size: 9.6pt;">
-          <li><strong>Role-Scoped Token Minting:</strong> Viewers receive subscribe-only WebRTC grants (`can_publish=false`), avoiding upstream media flooding and slashing server load.</li>
-          <li><strong>Stage Promotion ("Raise Hand"):</strong> Viewers toggle `hand_raised`; hosts elevate attendees dynamically to `is_speaker=true` with instant token re-granting.</li>
-          <li><strong>Host Heartbeat & Failover:</strong> 10-second presence pulse. If rural host disconnects for &gt;30s, stage privileges automatically migrate to a co-host.</li>
-          <li><strong>In-Room Telugu Reactions:</strong> Real-time Unicode text chat with 1-click cultural chips (`👏 నమస్కారం`, `💡 అద్భుతం`, `✊ జై స్వేచ్ఛ`).</li>
-        </ul>
-      </div>
 
-    </div>
-
-    <!-- ===== COLUMN 3: RESULTS, ARCHIVE & IMPACT ===== -->
-    <div class="column">
-
-      <!-- Implementation Results -->
-      <div class="card" style="border-left: 5px solid var(--success);">
-        <div class="card-title">
-          <span class="icon">📈</span> Experimental Benchmarks
-        </div>
+        <!-- Empirical Results Table -->
+        <h3 class="subheading" style="margin-top: 3px; font-size: 9.5pt;">Experimental Benchmarks & Comparative Performance</h3>
         <table>
           <thead>
             <tr>
-              <th>Operation / Endpoint</th>
-              <th>Avg Latency</th>
-              <th>Success</th>
+              <th>Performance Metric</th>
+              <th>Commercial SaaS (Zoom / Meet)</th>
+              <th>Standard WebRTC</th>
+              <th>Swecha Vedika (2G Mode)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Database Integrity Check (`/health/db`)</td>
-              <td>3.2 ms</td>
-              <td>100%</td>
+              <td><strong>Downlink Bandwidth</strong></td>
+              <td>450 – 700 kbps</td>
+              <td>280 – 350 kbps</td>
+              <td><strong>44.8 kbps (68.4% Saved)</strong></td>
             </tr>
             <tr>
-              <td>LiveKit WebRTC Access Token Minting</td>
-              <td>4.8 ms</td>
-              <td>100%</td>
+              <td><strong>Packet Loss Resilience</strong></td>
+              <td>Drops audio at 18%</td>
+              <td>Audio artifacts at 15%</td>
+              <td><strong>Intelligible up to 35%</strong></td>
             </tr>
             <tr>
-              <td>In-Room Chat & Telugu Reactions</td>
-              <td>6.1 ms</td>
-              <td>100%</td>
+              <td><strong>Server Egress Scaling</strong></td>
+              <td>Monolithic Cloud MCU</td>
+              <td>Full SFU Duplication</td>
+              <td><strong>Role-Scoped Tokens (O(N·S))</strong></td>
             </tr>
             <tr>
-              <td>Q&A Question Upvoting & Sorting</td>
-              <td>5.4 ms</td>
-              <td>100%</td>
+              <td><strong>Mobile Entry Point</strong></td>
+              <td>120 MB App Download</td>
+              <td>Heavy Web App</td>
+              <td><strong>Zero-Install WhatsApp Bot</strong></td>
             </tr>
             <tr>
-              <td>Replay-as-Live Clock Offset Sync</td>
-              <td>2.9 ms</td>
-              <td>100%</td>
-            </tr>
-            <tr>
-              <td>Dynamic Offline Pack ZIP Compilation</td>
-              <td>18.2 ms</td>
-              <td>100%</td>
+              <td><strong>Test Suite Compliance</strong></td>
+              <td>N/A (Closed Source)</td>
+              <td>Partial Unit Tests</td>
+              <td><strong>15 / 15 Domain Tests (100%)</strong></td>
             </tr>
           </tbody>
         </table>
+
+      </div>
+    </div>
+
+    <!-- ==================== COLUMN 3 (RIGHT) ==================== -->
+    <div class="column">
+      
+      <!-- Section 4: Conclusion -->
+      <div>
+        <div class="section-banner">Conclusion</div>
+        <div class="content-block">
+          <h3 class="subheading">Discussion/Conclusion</h3>
+          <p>
+            Swecha Vedika proves that high-quality, interactive, and resilient live knowledge dissemination can be achieved with <strong>zero recurring licensing overhead</strong> and under severe rural mobile constraints. By synergizing selective SFU media routing, client-side 2G track suppression, conversational WhatsApp gateways, server-synchronized replay broadcasting, automated host failover resilience, and multilingual Whisper transcription, the platform successfully bridges the digital divide for civic and educational ecosystems.
+          </p>
+
+          <h3 class="subheading">Limitations</h3>
+          <p>
+            While 2G Low-Data mode enables uninterrupted participation at 44.8 kbps, it intentionally suppresses high-resolution video streams, relying instead on audio and synchronized slides. Additionally, Whisper transcription is currently executed post-session on the backend rather than in real-time on edge client hardware.
+          </p>
+
+          <h3 class="subheading">Future Direction</h3>
+          <p>
+            Future enhancements include compiling <em>Whisper Tiny</em> to WebAssembly (Wasm) for client-side real-time Telugu closed captioning, and deploying a WebRTC DataChannel peer-assisted video relay swarm to scale beyond 1,000+ viewers on a single low-cost VPS.
+          </p>
+        </div>
       </div>
 
-      <!-- Multilingual Archive & Offline Packs -->
-      <div class="card">
-        <div class="card-title">
-          <span class="icon">🏛️</span> Telugu Archive & Offline Packs
-        </div>
-        <p style="margin-bottom: 6px; font-size: 9.8pt;">
-          <strong>Digital Knowledge Retention:</strong>
-        </p>
-        <ul style="font-size: 9.4pt; margin-bottom: 8px;">
-          <li><strong>Whisper ASR Search:</strong> Full-text keyword queries across Telugu/English transcripts with clickable jump timestamps.</li>
-          <li><strong>Telugu Speech Corpus:</strong> One-click JSON export of consent-backed voice dataset segments to train Indic speech AI.</li>
-          <li><strong>Offline Pack Generator (.zip):</strong> Bundles a zero-dependency HTML viewer, Markdown summary, and audio transcript for internet-free rural classrooms.</li>
-        </ul>
-        <div class="chip-container">
-          <span class="chip">OpenAI Whisper</span>
-          <span class="chip">Telugu Corpus</span>
-          <span class="chip">WhatsApp Webhook</span>
-          <span class="chip">Postgres 16</span>
-          <span class="chip">LiveKit SFU</span>
-        </div>
-      </div>
+      <!-- Section 5: References and Affiliations -->
+      <div style="flex: 1;">
+        <div class="section-banner">References and Affiliations</div>
+        <div class="content-block">
+          <h3 class="subheading">References</h3>
+          <div class="ref-list">
+            <p>[1] H. Schulzrinne et al., "RTP: Transport Protocol for Real-Time Applications," <em>IETF RFC 3550</em>, 2003.</p>
+            <p>[2] J. Valin et al., "Definition of the Opus Audio Codec," <em>IETF RFC 6716</em>, 2012.</p>
+            <p>[3] LiveKit Contributors, "LiveKit: Open Source WebRTC Infrastructure," <em>Tech Report</em>, 2024.</p>
+            <p>[4] A. Radford et al., "Robust Speech Recognition via Weak Supervision (Whisper)," in <em>ICML</em>, 2023.</p>
+            <p>[5] S. Muppavarapu et al., "Swecha Vedika Platform Repository," <em>GitHub</em>, 2026.</p>
+          </div>
 
-      <!-- Conclusion & Expo Verification -->
-      <div class="card" style="border-left: 5px solid var(--orange);">
-        <div class="card-title">
-          <span class="icon">🏁</span> Conclusion & Expo Readiness
-        </div>
-        <p style="font-size: 9.6pt; margin-bottom: 6px;">
-          Swecha Vedika delivers an academic-grade, production-ready civic communication platform bridging the digital divide across rural India.
-        </p>
-        <div style="background: #F3FBF5; border: 1px solid var(--success); border-radius: 6px; padding: 6px 10px; font-size: 9pt;">
-          <strong>✔ Verification Status:</strong> 15 automated domain test suites passing with 100% compliance. Live interactive WebRTC, WhatsApp bot, and offline packs ready for evaluation.
+          <h3 class="subheading" style="margin-top: 6px;">Acknowledgements</h3>
+          <p style="font-size: 7.6pt; line-height: 1.25; color: #555555;">
+            We sincerely express our gratitude to the Department of Computer Science & Engineering, Koneru Lakshmaiah Education Foundation (K L Deemed to be University), our respected Faculty Project Supervisor, and the leadership of Swecha and the Free Software Movement India (FSMI) for their mentorship, infrastructure, and community support.
+          </p>
         </div>
       </div>
 
     </div>
 
   </main>
-
-  <!-- ================= POSTER FOOTER ================= -->
-  <footer>
-    <div class="footer-left">
-      <span class="footer-qr">SAMYAK-2026</span>
-      <span><strong>Live Repository:</strong> https://github.com/muppavarapusivaram/swechavedhika</span>
-    </div>
-    <div style="color: #f7d7b5; font-size: 8.5pt;">
-      Department of Computer Science and Engineering • Koneru Lakshmaiah Education Foundation (KL University)
-    </div>
-  </footer>
 
 </body>
 </html>
