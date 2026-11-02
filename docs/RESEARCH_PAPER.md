@@ -7,8 +7,8 @@
 ---
 
 ## Authors & Affiliation
-* **Primary Student Investigator & Developer**: Muppavarapu Sivaram (ID: 2300030447)
-* **Co-Investigator**: Meda Lohith Pavan Kumar (ID: 2300030921)
+* **Muppavarapu Sivaram** (ID: 2300030447)
+* **Meda Lohith Pavan Kumar** (ID: 2300030921)
 * **Faculty Project Supervisor & Guide**: Dr. Koganti Sripath Roy, Department of CSE - ELGE, K L Deemed to be University
 
 ---
