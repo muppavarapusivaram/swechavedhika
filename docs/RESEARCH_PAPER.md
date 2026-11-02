@@ -1,4 +1,4 @@
-# Swecha Vedika: A Bandwidth-Frugal, Multilingual Live Stage and Knowledge Dissemination Platform for Resource-Constrained Civic Ecosystems
+# SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
 
 **Capstone Review**: SAMYAK-2026 Capstone Project Review  
 **Department**: Department of CSE - ELGE, Koneru Lakshmaiah Education Foundation (K L Deemed to be University), Vaddeswaram, Guntur, Andhra Pradesh, India  
