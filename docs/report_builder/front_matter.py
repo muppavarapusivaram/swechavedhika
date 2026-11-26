@@ -104,7 +104,7 @@ def get_front_matter_html(target, kl_logo_b64):
 
     <!-- Bottom metadata exactly matching reference format -->
     <div style="font-size: 9.5pt; text-align: center; line-height: 1.45; color: #111111;">
-        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> Y23-HTE KL-KLUG</div>
+        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> KL - GLUG</div>
         <div><strong>Domain:</strong> Blockchain & Cyber Security Systems</div>
     </div>
 </div>
@@ -166,7 +166,7 @@ def get_front_matter_html(target, kl_logo_b64):
     </div>
 
     <p style="text-indent: 28px; line-height: 1.55;">
-        We declare that this capstone report titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is an authentic record of the independent project work carried out by the undersigned team (Team: <strong>Y23-HTE KL-KLUG</strong>) under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement (EL&GE), Koneru Lakshmaiah Education Foundation (Deemed to be University).
+        We declare that this capstone report titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is an authentic record of the independent project work carried out by the undersigned team (Team: <strong>KL - GLUG</strong>) under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement (EL&GE), Koneru Lakshmaiah Education Foundation (Deemed to be University).
     </p>
 
     <p style="text-indent: 28px; line-height: 1.55;">
@@ -232,26 +232,22 @@ def get_front_matter_html(target, kl_logo_b64):
 
 <!-- ================= PAGE 5: ACKNOWLEDGEMENTS ================= -->
 <div class="front-page">
-    <div style="text-align: center; margin-top: 10px; margin-bottom: 18px;">
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 22px;">
         <h1 style="font-size: 13pt; font-weight: bold; text-transform: uppercase; margin: 0;">
             ACKNOWLEDGEMENTS
         </h1>
     </div>
 
-    <p style="text-indent: 28px; line-height: 1.55;">
-        The team expresses its deepest and most sincere gratitude to our esteemed faculty guide, <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement (EL&GE), for his invaluable mentorship, rigorous academic critique, continuous technical guidance, and steadfast encouragement throughout the conception, architecture, implementation, and empirical validation of <strong>Swecha Vedika</strong>.
+    <p style="text-indent: 28px; line-height: 1.6; margin-bottom: 16px;">
+        The team expresses its sincere gratitude to the faculty guide, <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement, for his valuable guidance, continuous support, and academic encouragement throughout the development of the project titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM."</strong>
     </p>
 
-    <p style="text-indent: 28px; line-height: 1.55;">
-        We extend our heartfelt appreciation to <strong>Dr. T. K. Rama Krishna Rao</strong>, Principal, College of Engineering, KLEF; <strong>Dr. S. V. Aswin Kumer</strong>, Head of Department, EL&GE; and <strong>Dr. P. Gopi Krishna</strong>, Alternate Head of Department, EL&GE, for their visionary administrative support, provision of exceptional computational infrastructure, and constant academic facilitation during the capstone progression.
+    <p style="text-indent: 28px; line-height: 1.6; margin-bottom: 16px;">
+        The team would like to express its heartfelt gratitude to <strong>Dr. T. K. Rama Krishna Rao</strong>, Principal, College of Engineering; <strong>Dr. S. V. Aswin Kumer</strong>, HoD, EL&GE; and <strong>Dr. P. Gopi Krishna</strong>, Alternate HoD, for their valuable support, encouragement, and administrative guidance throughout the project.
     </p>
 
-    <p style="text-indent: 28px; line-height: 1.55;">
-        We also express our sincere gratitude to the <strong>Swecha Telangana</strong> free and open-source software community for providing grassroots domain insights into the acute telecommunication constraints faced by rural students, self-help groups, and non-profit educational initiatives across rural Andhra Pradesh and Telangana.
-    </p>
-
-    <p style="text-indent: 28px; line-height: 1.55;">
-        Finally, we thank our parents, peers, lab coordinators, and faculty reviewers whose insightful critiques during milestone reviews G0, R1, PDR, and CDR significantly strengthened the architectural rigor, fault resilience, and practical relevance of this capstone endeavor.
+    <p style="text-indent: 28px; line-height: 1.6;">
+        The team also sincerely acknowledges the Department of Experiential Learning and Global Engagement and Koneru Lakshmaiah Education Foundation (Deemed to be University) for providing the academic environment in which the capstone work was undertaken. The team thanks all faculty members and individuals who provided feedback during project reviews and evaluation.
     </p>
 </div>
 """

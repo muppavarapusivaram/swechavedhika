@@ -49,7 +49,7 @@ def get_preliminary_sections_html(target):
         </tr>
         <tr>
             <td><strong>Team Name</strong></td>
-            <td>Y23-HTE KL-KLUG</td>
+            <td>KL - GLUG</td>
         </tr>
         <tr>
             <td><strong>Engineering Domain</strong></td>
@@ -109,7 +109,7 @@ def get_preliminary_sections_html(target):
 
     <h2 class="section-heading" style="margin-top: 8pt;">1. Documented Team Integration Contributions</h2>
     <p>
-        The Swecha Vedika capstone project was executed by a collaborative engineering team (Team: <strong>Y23-HTE KL-KLUG</strong>) consisting of two undergraduate students under the Department of Experiential Learning and Global Engagement (EL&GE). Both members actively participated in architectural ideation, system modeling, software development, testing, and report synthesis.
+        The Swecha Vedika capstone project was executed by a collaborative engineering team (Team: <strong>KL - GLUG</strong>) consisting of two undergraduate students under the Department of Experiential Learning and Global Engagement (EL&GE). Both members actively participated in architectural ideation, system modeling, software development, testing, and report synthesis.
     </p>
 
     <table class="report-table" style="font-size: 8pt; margin-top: 6pt;">
