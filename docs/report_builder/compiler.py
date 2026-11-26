@@ -17,9 +17,12 @@ DOCS_DIR = BASE_DIR / "docs"
 SCREENSHOTS_DIR = DOCS_DIR / "screenshots"
 
 def get_base64_image(image_path):
-    if os.path.exists(image_path):
+    image_path = Path(image_path)
+    if image_path.exists():
+        ext = image_path.suffix.lower()
+        mime = "image/jpeg" if ext in ['.jpg', '.jpeg'] else "image/png"
         with open(image_path, "rb") as f:
-            return f"data:image/png;base64,{base64.b64encode(f.read()).decode('utf-8')}"
+            return f"data:{mime};base64,{base64.b64encode(f.read()).decode('utf-8')}"
     return ""
 
 def build_html(target, kl_logo_b64, fig1_b64, fig2_b64, fig3_b64, fig4_b64):
@@ -96,7 +99,7 @@ def stamp_headers_and_footers(raw_pdf_path, final_pdf_path):
     return total_pages
 
 def compile_reports():
-    kl_logo_b64 = get_base64_image(DOCS_DIR / "kl_logo.png")
+    kl_logo_b64 = get_base64_image(DOCS_DIR / "official_kl_logo.jpeg")
     fig1_b64 = get_base64_image(SCREENSHOTS_DIR / "figure1_live_stage.png")
     fig2_b64 = get_base64_image(SCREENSHOTS_DIR / "figure2_sidebar_qa_polls.png")
     fig3_b64 = get_base64_image(SCREENSHOTS_DIR / "figure3_whatsapp_bot.png")

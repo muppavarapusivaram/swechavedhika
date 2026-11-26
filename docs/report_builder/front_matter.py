@@ -1,12 +1,12 @@
 def get_front_matter_html(target, kl_logo_b64):
     if target == "team":
         students_cover = """
-        <div style="font-size: 10.5pt; font-weight: bold; margin-bottom: 2px;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
-        <div style="font-size: 10.5pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
+        <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 10pt;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
+        <div style="font-size: 11.5pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
         """
         students_inner = """
-        <div style="font-size: 10.5pt; font-weight: bold; margin-bottom: 2px;">Muppavarapu Sivaram (2300030447)</div>
-        <div style="font-size: 10.5pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
+        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 8pt;">Muppavarapu Sivaram (2300030447)</div>
+        <div style="font-size: 11pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
         """
         students_decl = """
         <tr>
@@ -19,17 +19,18 @@ def get_front_matter_html(target, kl_logo_b64):
         </tr>
         """
         students_cert = """
-        <div style="font-size: 10.5pt; font-weight: bold; margin: 10px 0 14px 0;">
+        <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 16px 0;">
             1. Muppavarapu Sivaram (2300030447)<br>
             2. Meda Lohith Pavan Kumar (2300030921)
         </div>
         """
+        margin_under_students_cover = "58pt"
     elif target == "sivaram":
         students_cover = """
-        <div style="font-size: 10.5pt; font-weight: bold;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
+        <div style="font-size: 11.5pt; font-weight: bold;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
         """
         students_inner = """
-        <div style="font-size: 10.5pt; font-weight: bold;">Muppavarapu Sivaram (2300030447)</div>
+        <div style="font-size: 11pt; font-weight: bold;">Muppavarapu Sivaram (2300030447)</div>
         """
         students_decl = """
         <tr>
@@ -38,16 +39,17 @@ def get_front_matter_html(target, kl_logo_b64):
         </tr>
         """
         students_cert = """
-        <div style="font-size: 10.5pt; font-weight: bold; margin: 10px 0 14px 0;">
+        <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 16px 0;">
             Muppavarapu Sivaram (2300030447)
         </div>
         """
+        margin_under_students_cover = "75pt"
     else:
         students_cover = """
-        <div style="font-size: 10.5pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
+        <div style="font-size: 11.5pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
         """
         students_inner = """
-        <div style="font-size: 10.5pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
+        <div style="font-size: 11pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
         """
         students_decl = """
         <tr>
@@ -56,99 +58,102 @@ def get_front_matter_html(target, kl_logo_b64):
         </tr>
         """
         students_cert = """
-        <div style="font-size: 10.5pt; font-weight: bold; margin: 10px 0 14px 0;">
+        <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 16px 0;">
             Meda Lohith Pavan Kumar (2300030921)
         </div>
         """
+        margin_under_students_cover = "75pt"
 
     return f"""
 <!-- ================= PAGE 1: OUTER COVER PAGE ================= -->
-<div class="front-page" style="text-align: center; padding-top: 5px;">
-    <div style="margin-bottom: 6px;">
-        <img src="{kl_logo_b64}" style="height: 52px; object-fit: contain;" alt="KL University Logo">
+<div class="front-page" style="text-align: center; padding-top: 10pt;">
+    <div style="margin-bottom: 14pt;">
+        <img src="{kl_logo_b64}" style="width: 176pt; height: 75pt; object-fit: contain;" alt="KL University Logo">
     </div>
-    <div style="font-size: 12pt; font-weight: bold; color: #000; text-transform: uppercase; margin-bottom: 2px;">
+
+    <div style="font-size: 13.5pt; font-weight: bold; color: #000000; text-transform: uppercase; margin-bottom: 4pt;">
         KONERU LAKSHMAIAH EDUCATION FOUNDATION
     </div>
-    <div style="font-size: 10pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
+    <div style="font-size: 11.5pt; font-weight: bold; color: #111111; text-transform: uppercase; margin-bottom: 4pt;">
         (DEEMED TO BE UNIVERSITY)
     </div>
-    <div style="font-size: 10pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 12px;">
+    <div style="font-size: 10.5pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 28pt;">
         DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
     </div>
 
-    <div style="font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; color: #000;">
+    <div style="font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 30pt; color: #000000;">
         FINAL PROJECT REPORT
     </div>
 
-    <div style="font-size: 12.5pt; font-weight: bold; color: #103060; line-height: 1.35; padding: 0 10px; margin-bottom: 14px; text-transform: uppercase;">
+    <div style="font-size: 14pt; font-weight: bold; color: #183b68; line-height: 1.4; padding: 0 12pt; margin-bottom: 46pt; text-transform: uppercase;">
         SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
     </div>
 
-    <div style="font-size: 10pt; margin-bottom: 3px;">Submitted by</div>
-    <div style="margin-bottom: 14px;">
+    <div style="font-size: 11.5pt; margin-bottom: 12pt;">Submitted by</div>
+    <div style="margin-bottom: {margin_under_students_cover};">
         {students_cover}
     </div>
 
-    <div style="font-size: 10pt; margin-bottom: 3px;">Under the Guidance of</div>
-    <div style="font-size: 11pt; font-weight: bold; margin-bottom: 2px;">Dr. Koganti Sripath Roy</div>
-    <div style="font-size: 10pt; color: #222; margin-bottom: 2px;">Assistant Professor</div>
-    <div style="font-size: 10pt; color: #222; margin-bottom: 12px;">Department of EL&GE</div>
+    <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 8pt;">Under the Guidance of</div>
+    <div style="font-size: 13pt; font-weight: bold; margin-bottom: 2pt;">Dr. Koganti Sripath Roy</div>
+    <div style="font-size: 11pt; color: #222222; margin-bottom: 2pt;">Assistant Professor</div>
+    <div style="font-size: 11pt; color: #222222; margin-bottom: 105pt;">Department of EL&GE</div>
 
-    <div style="font-size: 10pt; font-weight: bold; margin-bottom: 2px;">Academic Year 2026–2027</div>
-    <div style="font-size: 9.5pt; color: #333; margin-bottom: 12px;">November, 2026</div>
+    <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 4pt;">Academic Year 2026–2027</div>
+    <div style="font-size: 11pt; color: #333333; margin-bottom: 22pt;">November, 2026</div>
 
-    <!-- Bottom Box firmly inside page 1 -->
-    <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 6px 10px; font-size: 8.5pt; text-align: center; border-radius: 4px; line-height: 1.35;">
+    <!-- Bottom metadata exactly matching reference format -->
+    <div style="font-size: 9.5pt; text-align: center; line-height: 1.45; color: #111111;">
         <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> Y23-HTE KL-KLUG</div>
-        <div style="margin-top: 2px;"><strong>Domain:</strong> Blockchain & Cyber Security Systems</div>
+        <div><strong>Domain:</strong> Blockchain & Cyber Security Systems</div>
     </div>
 </div>
 
 
 <!-- ================= PAGE 2: INNER TITLE PAGE ================= -->
-<div class="front-page" style="text-align: center; padding-top: 10px;">
-    <div style="margin-bottom: 8px;">
-        <img src="{kl_logo_b64}" style="height: 52px; object-fit: contain;" alt="KL University Logo">
+<div class="front-page" style="text-align: center; padding-top: 15pt;">
+    <div style="margin-bottom: 12pt;">
+        <img src="{kl_logo_b64}" style="width: 155pt; height: 65pt; object-fit: contain;" alt="KL University Logo">
     </div>
-    <div style="font-size: 12pt; font-weight: bold; color: #000; text-transform: uppercase;">
+
+    <div style="font-size: 12.5pt; font-weight: bold; color: #000000; text-transform: uppercase; margin-bottom: 3pt;">
         KONERU LAKSHMAIAH EDUCATION FOUNDATION
     </div>
-    <div style="font-size: 10pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
+    <div style="font-size: 11pt; font-weight: bold; color: #111111; text-transform: uppercase; margin-bottom: 3pt;">
         (DEEMED TO BE UNIVERSITY)
     </div>
-    <div style="font-size: 10pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 16px;">
+    <div style="font-size: 10pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 22pt;">
         DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
     </div>
 
-    <div style="font-size: 12.5pt; font-weight: bold; color: #103060; line-height: 1.35; padding: 0 10px; margin-bottom: 18px; text-transform: uppercase;">
+    <div style="font-size: 13pt; font-weight: bold; color: #183b68; line-height: 1.35; padding: 0 10pt; margin-bottom: 24pt; text-transform: uppercase;">
         SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
     </div>
 
-    <div style="font-size: 10.5pt; font-style: italic; line-height: 1.5; margin-bottom: 16px;">
+    <div style="font-size: 11pt; font-style: italic; line-height: 1.5; margin-bottom: 20pt;">
         A Capstone Project Report submitted in partial fulfilment<br>
         of the requirements for the award of the degree of
     </div>
 
-    <div style="font-size: 13pt; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">
+    <div style="font-size: 13.5pt; font-weight: bold; text-transform: uppercase; margin-bottom: 4pt;">
         BACHELOR OF TECHNOLOGY
     </div>
-    <div style="font-size: 10.5pt; font-weight: bold; margin-bottom: 18px;">
+    <div style="font-size: 11pt; font-weight: bold; margin-bottom: 26pt;">
         in Computer Science and Engineering
     </div>
 
-    <div style="font-size: 10pt; margin-bottom: 3px;">Submitted by</div>
-    <div style="margin-bottom: 18px;">
+    <div style="font-size: 11pt; margin-bottom: 8pt;">Submitted by</div>
+    <div style="margin-bottom: 30pt;">
         {students_inner}
     </div>
 
-    <div style="font-size: 10pt; margin-bottom: 3px;">Faculty Guide:</div>
-    <div style="font-size: 11pt; font-weight: bold; margin-bottom: 2px;">Dr. Koganti Sripath Roy</div>
-    <div style="font-size: 10pt; color: #222; margin-bottom: 2px;">Assistant Professor</div>
-    <div style="font-size: 10pt; color: #222; margin-bottom: 20px;">Department of EL&GE</div>
+    <div style="font-size: 11pt; margin-bottom: 4pt;">Faculty Guide:</div>
+    <div style="font-size: 12pt; font-weight: bold; margin-bottom: 2pt;">Dr. Koganti Sripath Roy</div>
+    <div style="font-size: 11pt; color: #222222; margin-bottom: 2pt;">Assistant Professor</div>
+    <div style="font-size: 11pt; color: #222222; margin-bottom: 30pt;">Department of EL&GE</div>
 
-    <div style="font-size: 10.5pt; font-weight: bold; margin-bottom: 2px;">Academic Year 2026–2027</div>
-    <div style="font-size: 10pt; color: #333;">November, 2026</div>
+    <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 3pt;">Academic Year 2026–2027</div>
+    <div style="font-size: 10.5pt; color: #333333;">November, 2026</div>
 </div>
 
 
@@ -161,7 +166,7 @@ def get_front_matter_html(target, kl_logo_b64):
     </div>
 
     <p style="text-indent: 28px; line-height: 1.55;">
-        We declare that this capstone report titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is an authentic record of the independent project work carried out by the undersigned team under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement (EL&GE), Koneru Lakshmaiah Education Foundation (Deemed to be University).
+        We declare that this capstone report titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is an authentic record of the independent project work carried out by the undersigned team (Team: <strong>Y23-HTE KL-KLUG</strong>) under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement (EL&GE), Koneru Lakshmaiah Education Foundation (Deemed to be University).
     </p>
 
     <p style="text-indent: 28px; line-height: 1.55;">
@@ -242,7 +247,7 @@ def get_front_matter_html(target, kl_logo_b64):
     </p>
 
     <p style="text-indent: 28px; line-height: 1.55;">
-        We also express our sincere gratitude to the <strong>Swecha Telangana</strong> free and open-source software community for providing grassroots domain insights into the acute telecommunication constraints faced by rural students, self-help groups, and non-profit educational initiatives across tier-2 and tier-3 regions of India.
+        We also express our sincere gratitude to the <strong>Swecha Telangana</strong> free and open-source software community for providing grassroots domain insights into the acute telecommunication constraints faced by rural students, self-help groups, and non-profit educational initiatives across rural Andhra Pradesh and Telangana.
     </p>
 
     <p style="text-indent: 28px; line-height: 1.55;">
