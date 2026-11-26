@@ -11,9 +11,27 @@
     margin-right: 25mm;
     margin-top: 25mm;
     margin-bottom: 25mm;
+    @top-center {
+        content: "KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING";
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 7.5pt;
+        color: #555555;
+        letter-spacing: 0.5px;
+    }
     @bottom-right {
         content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
     }
+}
+
+@page :first {
+    margin-top: 18mm;
+    margin-bottom: 18mm;
+    margin-left: 38mm;
+    margin-right: 25mm;
+    @top-center { content: none; }
+    @bottom-right { content: none; }
 }
 
 *, *::before, *::after {
@@ -22,149 +40,128 @@
 
 body {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 12pt;
-    line-height: 1.5;
+    font-size: 11.5pt;
+    line-height: 1.45;
     color: #000000;
     margin: 0;
     padding: 0;
     text-align: justify;
 }
 
-.page {
+.front-matter-page {
     page-break-after: always;
-    position: relative;
-    min-height: 100%;
+    break-after: page;
 }
 
-.cover-page {
-    page-break-after: always;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 980px;
-}
-
-.running-header {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 7.5pt;
-    color: #444444;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 0.5pt solid #888888;
-    padding-bottom: 4px;
-    margin-bottom: 18px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.running-footer {
-    position: absolute;
-    bottom: -15mm;
-    right: 0;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 11pt;
-    color: #222222;
+.chapter-block {
+    page-break-before: always;
+    break-before: page;
 }
 
 h1.chapter-title {
-    font-size: 16pt;
+    font-size: 15pt;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10pt;
+    margin-bottom: 16pt;
     color: #000000;
+    page-break-after: avoid;
+    break-after: avoid;
 }
 
 h2.section-heading {
-    font-size: 14pt;
+    font-size: 13pt;
     font-weight: bold;
-    margin-top: 18px;
-    margin-bottom: 8px;
+    margin-top: 14pt;
+    margin-bottom: 6pt;
     color: #000000;
+    page-break-after: avoid;
+    break-after: avoid;
 }
 
 h3.sub-heading {
-    font-size: 12pt;
+    font-size: 11.5pt;
     font-weight: bold;
-    margin-top: 14px;
-    margin-bottom: 6px;
+    margin-top: 10pt;
+    margin-bottom: 4pt;
     color: #000000;
+    page-break-after: avoid;
+    break-after: avoid;
 }
 
 p {
-    margin: 0 0 6pt 0;
+    margin: 0 0 5pt 0;
     text-align: justify;
     text-justify: inter-word;
 }
 
 ul, ol {
-    margin: 4pt 0 8pt 20pt;
+    margin: 3pt 0 6pt 18pt;
     padding: 0;
 }
 
 li {
-    margin-bottom: 4pt;
+    margin-bottom: 3pt;
     text-align: justify;
 }
 
 table.report-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 12pt 0;
-    font-size: 10pt;
-    page-break-inside: avoid;
+    margin: 6pt 0 8pt 0;
+    font-size: 9pt;
+    page-break-inside: auto;
 }
 
 table.report-table th {
     background-color: #f2f2f2;
     border: 1pt solid #444;
-    padding: 6pt 8pt;
+    padding: 4pt 6pt;
     text-align: left;
     font-weight: bold;
 }
 
 table.report-table td {
     border: 1pt solid #666;
-    padding: 5pt 8pt;
+    padding: 3.5pt 6pt;
     vertical-align: top;
 }
 
-.table-caption {
-    font-size: 10pt;
-    font-weight: bold;
-    margin-bottom: 4pt;
-    text-align: left;
+tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 .figure-box {
     text-align: center;
-    margin: 14pt 0;
+    margin: 6pt auto;
     page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 .figure-box img {
-    max-width: 95%;
-    height: auto;
+    max-height: 150px;
+    max-width: 86%;
     border: 1pt solid #bbb;
     border-radius: 2px;
+    object-fit: contain;
 }
 
 .figure-caption {
-    font-size: 10pt;
+    font-size: 9pt;
     font-weight: bold;
-    margin-top: 6pt;
+    margin-top: 3pt;
     text-align: center;
 }
 
 .equation-box {
-    margin: 10pt 0;
-    padding: 6pt 14pt;
+    margin: 8pt 0;
+    padding: 5pt 12pt;
     background: #fdfdfd;
     border: 1pt solid #ddd;
     font-family: 'Courier New', monospace;
-    font-size: 10pt;
+    font-size: 9.5pt;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -178,7 +175,7 @@ table.report-table td {
 }
 
 .signature-table td {
-    padding: 12px 6px;
+    padding: 10px 6px;
     vertical-align: top;
 }
 
@@ -187,63 +184,56 @@ table.report-table td {
 <body>
 
 <!-- ================= PAGE 1: OUTER COVER PAGE ================= -->
-<div class="page cover-page">
-    <div>
-        <div style="margin-top: 15px; margin-bottom: 12px;">
-            <img src="data:image/png;base64,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kElLuRWt7lPRBIjJUqmQV9PVwuiND8vHx9EUSsEg+01zFN4uHP5+/o6Vhpk+8Pd3PTweQ80VHRXteoBcV5376WiyZcuZ/pHoKzhYBIbNFdRq1HzMATqdfL7Rt9w6Af94+2107dZNltu+7Y47XNfujNY43t33TscLq1bW6ojWaByL27ojrls36P31MnnuyWuC17Fxw3poNFqJeCezba1mnC5d4zBy1O9gqDRgx/btruugJvpy61bpNqJQsc7eidDQkEtMFp/FgEGDLglkHOfRYPT1N0hJtzvOnD2DHj17tppQKa70/6HcbdIkTHVbYJ+miwvEMoLj+ueMbvimUP1brRYEB4eIueJk8aE5b96pip2+FoWMY/HGqaHqCwJoPunDOL87i/mcfg3fXqp594dHhp61XVnnz8kDp3ZxCgqP5Qp8w0eOdDni5NWcjjrvge1kJGvdQRNNgXJv33c65PQLqTFZskMuzn3BEf6eGp337K7J+Ddqc7587oLK47i5+22NBUb10QeXoxRYEfpSUBDMBgOuKqEimCxmq3trvQketA5aSqhahVJgVOTBbxceVeJBi8MjVB60ODxC5UGL44oddZZQaFsph+TBLwyW3zBDcYWk6BU76mxONLqxxR54oNQGOLgiDzxoKajjZk6FUtN2Fn734OqHWj+gC2zWluuj98ADtR1q2O0eofKg5aD2C+wJpaplmhg98IBQmExGu1bbtHWYPPCgKVA2dZF4DzxAE/H/AVCwGp+C40XlAAAAAElFTkSuQmCC" style="height: 95px; object-fit: contain;" alt="KL University Logo">
-        </div>
-        <div style="font-size: 13pt; font-weight: bold; color: #000; text-transform: uppercase; margin-bottom: 2px;">
-            KONERU LAKSHMAIAH EDUCATION FOUNDATION
-        </div>
-        <div style="font-size: 11pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
-            (DEEMED TO BE UNIVERSITY)
-        </div>
-        <div style="font-size: 11pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 25px;">
-            DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
-        </div>
-
-        <div style="font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; color: #000;">
-            FINAL PROJECT REPORT
-        </div>
-
-        <div style="font-size: 15pt; font-weight: bold; color: #103060; line-height: 1.35; padding: 0 10px; margin-bottom: 30px; text-transform: uppercase;">
-            SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
-        </div>
-
-        <div style="font-size: 11pt; margin-bottom: 8px;">Submitted by</div>
-        <div style="margin-bottom: 30px;">
-            
-        <div style="font-size: 12pt; font-weight: bold; margin-bottom: 4px;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
-        <div style="font-size: 12pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
-        
-        </div>
-
-        <div style="font-size: 11pt; margin-bottom: 6px;">Under the Guidance of</div>
-        <div style="font-size: 12pt; font-weight: bold; margin-bottom: 2px;">Dr. Koganti Sripath Roy</div>
-        <div style="font-size: 11pt; color: #222; margin-bottom: 2px;">Assistant Professor</div>
-        <div style="font-size: 11pt; color: #222; margin-bottom: 25px;">Department of EL&GE</div>
-
-        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 2px;">Academic Year 2026–2027</div>
-        <div style="font-size: 11pt; color: #333; margin-bottom: 25px;">November, 2026</div>
+<div class="front-matter-page" style="text-align: center;">
+    <div style="margin-top: 5px; margin-bottom: 10px;">
+        <img src="data:image/png;base64,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kElLuRWt7lPRBIjJUqmQV9PVwuiND8vHx9EUSsEg+01zFN4uHP5+/o6Vhpk+8Pd3PTweQ80VHRXteoBcV5376WiyZcuZ/pHoKzhYBIbNFdRq1HzMATqdfL7Rt9w6Af94+2107dZNltu+7Y47XNfujNY43t33TscLq1bW6ojWaByL27ojrls36P31MnnuyWuC17Fxw3poNFqJeCezba1mnC5d4zBy1O9gqDRgx/btruugJvpy61bpNqJQsc7eidDQkEtMFp/FgEGDLglkHOfRYPT1N0hJtzvOnD2DHj17tppQKa70/6HcbdIkTHVbYJ+miwvEMoLj+ueMbvimUP1brRYEB4eIueJk8aE5b96pip2+FoWMY/HGqaHqCwJoPunDOL87i/mcfg3fXqp594dHhp61XVnnz8kDp3ZxCgqP5Qp8w0eOdDni5NWcjjrvge1kJGvdQRNNgXJv33c65PQLqTFZskMuzn3BEf6eGp337K7J+Ddqc7587oLK47i5+22NBUb10QeXoxRYEfpSUBDMBgOuKqEimCxmq3trvQketA5aSqhahVJgVOTBbxceVeJBi8MjVB60ODxC5UGL44oddZZQaFsph+TBLwyW3zBDcYWk6BU76mxONLqxxR54oNQGOLgiDzxoKajjZk6FUtN2Fn734OqHWj+gC2zWluuj98ADtR1q2O0eofKg5aD2C+wJpaplmhg98IBQmExGu1bbtHWYPPCgKVA2dZF4DzxAE/H/AVCwGp+C40XlAAAAAElFTkSuQmCC" style="height: 70px; object-fit: contain;" alt="KL University Logo">
+    </div>
+    <div style="font-size: 12.5pt; font-weight: bold; color: #000; text-transform: uppercase; margin-bottom: 2px;">
+        KONERU LAKSHMAIAH EDUCATION FOUNDATION
+    </div>
+    <div style="font-size: 10.5pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
+        (DEEMED TO BE UNIVERSITY)
+    </div>
+    <div style="font-size: 10.5pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 18px;">
+        DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
     </div>
 
-    <!-- Bottom Box exactly matching template -->
-    <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 8px 12px; font-size: 9.5pt; text-align: center; border-radius: 4px; margin-bottom: 10px;">
+    <div style="font-size: 13.5pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18px; color: #000;">
+        FINAL PROJECT REPORT
+    </div>
+
+    <div style="font-size: 13.5pt; font-weight: bold; color: #103060; line-height: 1.35; padding: 0 10px; margin-bottom: 22px; text-transform: uppercase;">
+        SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
+    </div>
+
+    <div style="font-size: 10.5pt; margin-bottom: 4px;">Submitted by</div>
+    <div style="margin-bottom: 22px;">
+        
+        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 3px;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
+        <div style="font-size: 11pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
+        
+    </div>
+
+    <div style="font-size: 10.5pt; margin-bottom: 4px;">Under the Guidance of</div>
+    <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 2px;">Dr. Koganti Sripath Roy</div>
+    <div style="font-size: 10.5pt; color: #222; margin-bottom: 2px;">Assistant Professor</div>
+    <div style="font-size: 10.5pt; color: #222; margin-bottom: 18px;">Department of EL&GE</div>
+
+    <div style="font-size: 10.5pt; font-weight: bold; margin-bottom: 2px;">Academic Year 2026–2027</div>
+    <div style="font-size: 10pt; color: #333; margin-bottom: 18px;">November, 2026</div>
+
+    <!-- Bottom Box firmly inside page 1 -->
+    <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 7px 12px; font-size: 9pt; text-align: center; border-radius: 4px; margin-top: 10px;">
         <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> KL - KLUG &nbsp;|&nbsp; <strong>Cluster:</strong> Cluster A - Software Systems Engineering</div>
-        <div style="margin-top: 3px;"><strong>Domain:</strong> Real-Time Communication, WebRTC & Bandwidth-Frugal Distributed Systems</div>
+        <div style="margin-top: 2px;"><strong>Domain:</strong> Real-Time Communication, WebRTC & Bandwidth-Frugal Distributed Systems</div>
     </div>
 </div>
 
 
 <!-- ================= PAGE 2: INNER TITLE PAGE ================= -->
-<div class="page" style="text-align: center;">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 2</span>
-    </div>
-
-    <div style="margin-top: 15px; margin-bottom: 10px;">
-        <img src="data:image/png;base64,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kElLuRWt7lPRBIjJUqmQV9PVwuiND8vHx9EUSsEg+01zFN4uHP5+/o6Vhpk+8Pd3PTweQ80VHRXteoBcV5376WiyZcuZ/pHoKzhYBIbNFdRq1HzMATqdfL7Rt9w6Af94+2107dZNltu+7Y47XNfujNY43t33TscLq1bW6ojWaByL27ojrls36P31MnnuyWuC17Fxw3poNFqJeCezba1mnC5d4zBy1O9gqDRgx/btruugJvpy61bpNqJQsc7eidDQkEtMFp/FgEGDLglkHOfRYPT1N0hJtzvOnD2DHj17tppQKa70/6HcbdIkTHVbYJ+miwvEMoLj+ueMbvimUP1brRYEB4eIueJk8aE5b96pip2+FoWMY/HGqaHqCwJoPunDOL87i/mcfg3fXqp594dHhp61XVnnz8kDp3ZxCgqP5Qp8w0eOdDni5NWcjjrvge1kJGvdQRNNgXJv33c65PQLqTFZskMuzn3BEf6eGp337K7J+Ddqc7587oLK47i5+22NBUb10QeXoxRYEfpSUBDMBgOuKqEimCxmq3trvQketA5aSqhahVJgVOTBbxceVeJBi8MjVB60ODxC5UGL44oddZZQaFsph+TBLwyW3zBDcYWk6BU76mxONLqxxR54oNQGOLgiDzxoKajjZk6FUtN2Fn734OqHWj+gC2zWluuj98ADtR1q2O0eofKg5aD2C+wJpaplmhg98IBQmExGu1bbtHWYPPCgKVA2dZF4DzxAE/H/AVCwGp+C40XlAAAAAElFTkSuQmCC" style="height: 85px; object-fit: contain;" alt="KL University Logo">
+<div class="front-matter-page" style="text-align: center;">
+    <div style="margin-top: 10px; margin-bottom: 10px;">
+        <img src="data:image/png;base64,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kElLuRWt7lPRBIjJUqmQV9PVwuiND8vHx9EUSsEg+01zFN4uHP5+/o6Vhpk+8Pd3PTweQ80VHRXteoBcV5376WiyZcuZ/pHoKzhYBIbNFdRq1HzMATqdfL7Rt9w6Af94+2107dZNltu+7Y47XNfujNY43t33TscLq1bW6ojWaByL27ojrls36P31MnnuyWuC17Fxw3poNFqJeCezba1mnC5d4zBy1O9gqDRgx/btruugJvpy61bpNqJQsc7eidDQkEtMFp/FgEGDLglkHOfRYPT1N0hJtzvOnD2DHj17tppQKa70/6HcbdIkTHVbYJ+miwvEMoLj+ueMbvimUP1brRYEB4eIueJk8aE5b96pip2+FoWMY/HGqaHqCwJoPunDOL87i/mcfg3fXqp594dHhp61XVnnz8kDp3ZxCgqP5Qp8w0eOdDni5NWcjjrvge1kJGvdQRNNgXJv33c65PQLqTFZskMuzn3BEf6eGp337K7J+Ddqc7587oLK47i5+22NBUb10QeXoxRYEfpSUBDMBgOuKqEimCxmq3trvQketA5aSqhahVJgVOTBbxceVeJBi8MjVB60ODxC5UGL44oddZZQaFsph+TBLwyW3zBDcYWk6BU76mxONLqxxR54oNQGOLgiDzxoKajjZk6FUtN2Fn734OqHWj+gC2zWluuj98ADtR1q2O0eofKg5aD2C+wJpaplmhg98IBQmExGu1bbtHWYPPCgKVA2dZF4DzxAE/H/AVCwGp+C40XlAAAAAElFTkSuQmCC" style="height: 65px; object-fit: contain;" alt="KL University Logo">
     </div>
     <div style="font-size: 12pt; font-weight: bold; color: #000; text-transform: uppercase;">
         KONERU LAKSHMAIAH EDUCATION FOUNDATION
@@ -251,62 +241,57 @@ table.report-table td {
     <div style="font-size: 10.5pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
         (DEEMED TO BE UNIVERSITY)
     </div>
-    <div style="font-size: 10.5pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 25px;">
+    <div style="font-size: 10.5pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 20px;">
         DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
     </div>
 
-    <div style="font-size: 14.5pt; font-weight: bold; color: #103060; line-height: 1.35; margin-bottom: 20px; text-transform: uppercase; padding: 0 15px;">
+    <div style="font-size: 13.5pt; font-weight: bold; color: #103060; line-height: 1.35; margin-bottom: 18px; text-transform: uppercase; padding: 0 15px;">
         SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
     </div>
 
-    <p style="text-align: center; font-size: 11pt; margin-bottom: 6px;">
+    <p style="text-align: center; font-size: 10.5pt; margin-bottom: 4px;">
         A Capstone Project Report submitted in partial fulfilment of the requirements for the award of the degree of
     </p>
-    <div style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 2px;">
+    <div style="font-size: 11.5pt; font-weight: bold; text-transform: uppercase; margin-bottom: 2px;">
         BACHELOR OF TECHNOLOGY
     </div>
-    <div style="font-size: 11pt; margin-bottom: 25px;">
+    <div style="font-size: 10.5pt; margin-bottom: 22px;">
         in <strong>COMPUTER SCIENCE AND ENGINEERING</strong>
     </div>
 
-    <div style="font-size: 11pt; margin-bottom: 8px;">Submitted by</div>
-    <div style="margin-bottom: 30px;">
+    <div style="font-size: 10.5pt; margin-bottom: 6px;">Submitted by</div>
+    <div style="margin-bottom: 24px;">
         
-        <div style="font-size: 12pt; font-weight: bold; margin-bottom: 4px;">Muppavarapu Sivaram (2300030447)</div>
-        <div style="font-size: 12pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
+        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 3px;">Muppavarapu Sivaram (2300030447)</div>
+        <div style="font-size: 11pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
         
     </div>
 
-    <div style="font-size: 11pt; margin-bottom: 6px;">Faculty Guide:</div>
-    <div style="font-size: 12pt; font-weight: bold; margin-bottom: 2px;">Dr. KOGANTI SRIPATH ROY</div>
-    <div style="font-size: 11pt; color: #222; margin-bottom: 25px;">Professor, Department of EL&GE</div>
+    <div style="font-size: 10.5pt; margin-bottom: 4px;">Faculty Guide:</div>
+    <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 2px;">Dr. KOGANTI SRIPATH ROY</div>
+    <div style="font-size: 10.5pt; color: #222; margin-bottom: 22px;">Professor, Department of EL&GE</div>
 
-    <div style="font-size: 11pt; font-weight: bold; margin-top: 30px;">Academic Year 2026–2027</div>
+    <div style="font-size: 10.5pt; font-weight: bold; margin-top: 20px;">Academic Year 2026–2027</div>
 </div>
 
 
 <!-- ================= PAGE 3: STUDENT DECLARATION ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 3</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-        <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+<div class="front-matter-page">
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 20px;">
+        <h2 style="font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
             STUDENT DECLARATION AND ORIGINALITY STATEMENT
         </h2>
     </div>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         We declare that this capstone report titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is a record of the project work carried out by the undersigned team under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement. We confirm that the implementation details, results and claims included in the final submitted version will be checked against the team's source code, experiment records and research diary. All external ideas and materials will be acknowledged through appropriate citations. Any AI-assisted contribution will be disclosed in the responsible-use statement.
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 40px;">
+    <p style="line-height: 1.55; margin-bottom: 30px;">
         We understand that the declaration must be signed by all team members and that the university may require an originality/plagiarism report.
     </p>
 
-    <table style="width: 100%; border-collapse: collapse; margin-top: 30px;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 25px;">
         
         <tr>
             <td style="width: 50%; font-weight: bold;">Muppavarapu Sivaram (2300030447):</td>
@@ -322,34 +307,29 @@ table.report-table td {
 
 
 <!-- ================= PAGE 4: CERTIFICATE ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 4</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-        <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+<div class="front-matter-page">
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 20px;">
+        <h2 style="font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
             CERTIFICATE
         </h2>
     </div>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         This is to certify that the capstone project report entitled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is submitted by the students listed below, in partial fulfilment of the requirements for the academic project work under the <strong>Department of Experiential Learning and Global Engagement</strong>, Koneru Lakshmaiah Education Foundation (Deemed to be University), during the Academic Year 2026-2027.
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 20px;">
+    <p style="line-height: 1.55; margin-bottom: 16px;">
         The project work was carried out under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement. The final certification is subject to verification of the submitted implementation, research diary, review-gate records and evidence package.
     </p>
 
     
-        <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 20px 0;">
+        <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 16px 0;">
             1. Muppavarapu Sivaram (2300030447)<br>
             2. Meda Lohith Pavan Kumar (2300030921)
         </div>
         
 
-    <table class="signature-table" style="margin-top: 60px;">
+    <table class="signature-table" style="margin-top: 45px;">
         <tr>
             <td style="width: 50%;">
                 <strong>Faculty Guide:</strong> ____________________<br><br>
@@ -361,7 +341,7 @@ table.report-table td {
             </td>
         </tr>
         <tr>
-            <td colspan="2" style="padding-top: 40px;">
+            <td colspan="2" style="padding-top: 35px;">
                 <strong>External Examiner:</strong> ____________________<br><br>
                 <strong>Date:</strong> __________
             </td>
@@ -371,61 +351,51 @@ table.report-table td {
 
 
 <!-- ================= PAGE 5: ACKNOWLEDGEMENTS ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 5</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-        <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+<div class="front-matter-page">
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 20px;">
+        <h2 style="font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
             ACKNOWLEDGEMENTS
         </h2>
     </div>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         The team expresses its sincere gratitude to the faculty guide, <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement, for his valuable guidance, continuous support, and academic encouragement throughout the development of the project titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM."</strong>
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         The team would like to express its heartfelt gratitude to <strong>Dr. T. K. Rama Krishna Rao</strong>, Principal, College of Engineering; <strong>Dr. S. V. Aswin Kumer</strong>, HoD, EL&GE; and <strong>Dr. P. Gopi Krishna</strong>, Alternate HoD, for their valuable support, encouragement, and administrative guidance throughout the project.
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         The team also sincerely acknowledges the <strong>Department of Experiential Learning and Global Engagement</strong> and <strong>Koneru Lakshmaiah Education Foundation (Deemed to be University)</strong> for providing the academic environment in which the capstone work was undertaken. The team thanks all faculty members and individuals who provided feedback during project reviews and evaluation.
     </p>
 </div>
 
 
 <!-- ================= PAGE 6: STRUCTURED ABSTRACT & PROJECT AT A GLANCE ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 6</span>
-    </div>
+<div class="front-matter-page">
+    <h1 class="chapter-title" style="margin-top: 5pt; margin-bottom: 10pt;">STRUCTURED ABSTRACT</h1>
 
-    <h1 class="chapter-title" style="margin-top: 10px;">STRUCTURED ABSTRACT</h1>
-
-    <table class="report-table">
+    <table class="report-table" style="margin: 4pt 0 8pt 0;">
         <tr>
             <th style="width: 28%;">Component</th>
             <th style="width: 72%;">Description</th>
         </tr>
         <tr>
             <td><strong>Problem & Stakeholder Need</strong></td>
-            <td>Commercial video conferencing tools (Zoom, Meet, Teams) impose heavy monthly per-host fees, consume 600–1800 kbps, drop calls on rural 2G/EDGE networks with high packet loss, and fail to retain spoken regional Telugu/English knowledge for rural students and non-profit volunteers.</td>
+            <td>Commercial video tools (Zoom/Meet) impose heavy recurring host fees, consume 600–1800 kbps, drop calls on rural 2G/EDGE networks, and fail to retain spoken regional Telugu/English knowledge for rural learners and volunteers.</td>
         </tr>
         <tr>
             <td><strong>Approved Mandate & Delivery</strong></td>
-            <td>To architect, implement, benchmark, and deploy a self-hosted, bandwidth-frugal real-time meeting and digital knowledge platform (Swecha Vedika) running on Docker Compose on modest VPS hardware with zero recurring licensing overhead.</td>
+            <td>To architect, implement, benchmark, and deploy an open-source, bandwidth-frugal real-time meeting platform (Swecha Vedika) running on Docker Compose on modest VPS hardware with zero recurring licensing overhead.</td>
         </tr>
         <tr>
-            <td><strong>Engineering Method & Realisation</strong></td>
-            <td>Hybrid Selective Forwarding Unit (SFU) on LiveKit WebRTC, client-side 2G Low-Data mode with prioritized Opus audio, Meta WhatsApp FSM gateway for conversational stage Q&A, server-synchronized Replay-as-Live broadcasting, and in-browser real-time speech-to-text with Whisper ASR archiving.</td>
+            <td><strong>Engineering Method</strong></td>
+            <td>Hybrid Selective Forwarding Unit (SFU) on LiveKit WebRTC, client-side 2G Low-Data mode with prioritized Opus audio, Meta WhatsApp FSM gateway, server-synchronized Replay-as-Live broadcasting, and in-browser speech-to-text with Whisper ASR archiving.</td>
         </tr>
         <tr>
             <td><strong>Quantitative Results</strong></td>
-            <td>Achieved <strong>44.8 kbps</strong> downlink (an <strong>85.21% bandwidth reduction</strong> over standard 303 kbps WebRTC and 68.4% reduction over standard SFU video); sustained voice intelligibility under <strong>35% simulated packet loss</strong>; API mean latency <strong>2.9–18.2 ms</strong> under 50 concurrent requests.</td>
+            <td>Achieved <strong>44.8 kbps</strong> downlink (an <strong>85.21% bandwidth reduction</strong> over standard 303 kbps WebRTC and 68.4% reduction over standard SFU video); voice intelligible under <strong>35% simulated packet loss</strong>; API mean latency <strong>2.9–18.2 ms</strong> under 50 concurrent requests.</td>
         </tr>
         <tr>
             <td><strong>Original Contribution</strong></td>
@@ -441,24 +411,18 @@ table.report-table td {
         </tr>
     </table>
 
-    <h2 class="section-heading" style="margin-top: 15px;">Project at a Glance</h2>
-    <div style="border: 1pt solid #bbb; background: #fafafa; padding: 10px; font-size: 9pt; border-radius: 4px;">
-        <div style="font-weight: bold; margin-bottom: 4px; color: #103060;">Cluster A Software Architecture Flow:</div>
+    <div style="border: 1pt solid #bbb; background: #fafafa; padding: 7px 10px; font-size: 8.5pt; border-radius: 4px; margin-top: 6pt;">
+        <div style="font-weight: bold; margin-bottom: 2px; color: #103060;">Cluster A Software Architecture Flow:</div>
         <div><strong>Rural Stakeholder Problem:</strong> High cost, 2G bandwidth dropouts, zero Telugu knowledge retention.</div>
-        <div style="margin-top: 2px;"><strong>Actor & Input Channels:</strong> Desktop/Mobile Browser (WebRTC) &bull; Edge Mobile Device (Sub-50 kbps) &bull; WhatsApp Mobile (Text FSM).</div>
-        <div style="margin-top: 2px;"><strong>Microservices:</strong> LiveKit Media SFU (Ports 7880-7882) &bull; FastAPI Core (Port 8000) &bull; PostgreSQL 16 (Port 5432) &bull; React 18 UI.</div>
-        <div style="margin-top: 2px;"><strong>Key Metrics:</strong> 44.8 kbps 2G Bitrate &bull; 35% Packet Loss Resilience &bull; 100% Test Pass Rate &bull; Zero Recurring SaaS Cost.</div>
+        <div><strong>Actor & Input Channels:</strong> Desktop/Mobile Browser (WebRTC) &bull; Edge Mobile Device (Sub-50 kbps) &bull; WhatsApp Mobile (Text FSM).</div>
+        <div><strong>Microservices:</strong> LiveKit Media SFU (Ports 7880-7882) &bull; FastAPI Core (Port 8000) &bull; PostgreSQL 16 (Port 5432) &bull; React 18 UI.</div>
+        <div><strong>Key Metrics:</strong> 44.8 kbps 2G Bitrate &bull; 35% Packet Loss Resilience &bull; 100% Test Pass Rate &bull; Zero Recurring SaaS Cost.</div>
     </div>
 </div>
 
 
 <!-- ================= CHAPTER 1 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 7</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 1<br>PROJECT CONTEXT, PROBLEM DEFINITION AND OBJECTIVES</h1>
 
     <h2 class="section-heading">1.1 Project Identity</h2>
@@ -566,12 +530,7 @@ table.report-table td {
 
 
 <!-- ================= CHAPTER 2 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 8</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 2<br>LITERATURE REVIEW, EXISTING SOLUTIONS AND IDENTIFIED GAP</h1>
 
     <h2 class="section-heading">2.1 Review Protocol and Technical Standards</h2>
@@ -580,7 +539,7 @@ table.report-table td {
     </p>
 
     <h2 class="section-heading">2.2 Comparison Matrix Against Existing Systems</h2>
-    <table class="report-table">
+    <table class="report-table" style="font-size: 8.5pt; margin: 4pt 0 6pt 0;">
         <tr>
             <th style="width: 18%;">Dimension</th>
             <th style="width: 26%;">Commercial SaaS<br>(Zoom / Google Meet)</th>
@@ -633,12 +592,7 @@ table.report-table td {
 
 
 <!-- ================= CHAPTER 3 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 9</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 3<br>REQUIREMENTS SPECIFICATION AND ACCEPTANCE CRITERIA</h1>
 
     <h2 class="section-heading">3.1 Functional Requirements (REQ-F)</h2>
@@ -704,12 +658,7 @@ table.report-table td {
 
 
 <!-- ================= CHAPTER 4 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 10</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 4<br>SYSTEM ARCHITECTURE, DATA DESIGN AND ENGINEERING DECISIONS</h1>
 
     <h2 class="section-heading">4.1 Containerized 4-Tier Distributed Architecture</h2>
@@ -759,12 +708,7 @@ table.report-table td {
 
 
 <!-- ================= CHAPTER 5 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 11</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 5<br>SYSTEM IMPLEMENTATION, INTEGRATION AND DEPLOYMENT</h1>
 
     <h2 class="section-heading">5.1 Implementation Evidence and Operational UI</h2>
@@ -782,7 +726,7 @@ table.report-table td {
         <div class="figure-caption">Figure 5.2: Interactive Sidebar with Stage Moderation, Real-Time Q&A Upvote Queue, and Live Community Polls.</div>
     </div>
 
-    <h2 class="section-heading">5.2 Conversational WhatsApp Bot and Speech-to-Text Implementation</h2>
+    <h2 class="section-heading" style="page-break-before: always; margin-top: 10pt;">5.2 Conversational WhatsApp Bot and Speech-to-Text Implementation</h2>
     <p>
         The WhatsApp Front-Door Bot provides instant access for rural mobile participants, parsing user intents through a deterministic FSM and injecting live questions into the stage queue:
     </p>
@@ -800,12 +744,7 @@ table.report-table td {
 
 
 <!-- ================= CHAPTER 6 & 7 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 12</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 6 & 7<br>VERIFICATION, BENCHMARKING AND PERFORMANCE EVALUATION</h1>
 
     <h2 class="section-heading">6.1 Automated Test Suite Verification</h2>
@@ -914,12 +853,7 @@ table.report-table td {
 
 
 <!-- ================= CHAPTER 8 & 9: RUBRICS & OUTCOMES ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 13</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 8 & 9<br>OUTCOMES, IMPACT AND REVIEW DEFENSE RUBRIC</h1>
 
     <h2 class="section-heading">8.1 UN Sustainable Development Goals (SDG) Alignment</h2>
@@ -929,8 +863,8 @@ table.report-table td {
         <li><strong>SDG 10 (Reduced Inequalities):</strong> Democratizes regional language representation via automated Telugu speech corpus generation.</li>
     </ul>
 
-    <h2 class="section-heading">9.1 Capstone Project-I Evaluation Rubric Defense</h2>
-    <table class="report-table">
+    <h2 class="section-heading" style="page-break-before: always; margin-top: 10pt;">9.1 Capstone Project-I Evaluation Rubric Defense</h2>
+    <table class="report-table" style="font-size: 8.5pt; margin: 4pt 0 6pt 0;">
         <tr>
             <th style="width: 25%;">Evaluation Rubric</th>
             <th style="width: 55%;">Project Evidence & Defence Points</th>
@@ -981,12 +915,7 @@ table.report-table td {
 
 
 <!-- ================= CHAPTER 10 & REFERENCES ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 14</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 10<br>CONCLUSIONS AND FUTURE WORK</h1>
 
     <h2 class="section-heading">10.1 Conclusions</h2>
@@ -1001,8 +930,8 @@ table.report-table td {
         <li><strong>Vector Slide Diffing:</strong> Transmitting presentation slide coordinates rather than video pixels to drop screen-sharing bandwidth below 20 kbps.</li>
     </ul>
 
-    <h2 class="section-heading" style="margin-top: 25px;">REFERENCES</h2>
-    <ol style="font-size: 9.5pt; line-height: 1.45; padding-left: 18px;">
+    <h2 class="section-heading" style="margin-top: 18pt;">REFERENCES</h2>
+    <ol style="font-size: 9pt; line-height: 1.45; padding-left: 18px;">
         <li>C. Perkins, <em>RTP: Audio and Video for the Internet</em>, Addison-Wesley Professional, Boston, MA, 2003.</li>
         <li>H. Schulzrinne, S. Casner, R. Frederick, and V. Jacobson, "RTP: A Transport Protocol for Real-Time Applications," <em>IETF RFC 3550</em>, 2003.</li>
         <li>LiveKit Contributors, "LiveKit: Open Source Real-Time Video and Audio Infrastructure," [Online]. Available: https://livekit.io, 2024.</li>

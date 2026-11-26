@@ -2,7 +2,6 @@ import os
 import subprocess
 from pathlib import Path
 
-# Paths
 BASE_DIR = Path(r"C:\Users\Victus\Documents\swecha\prototype")
 DOCS_DIR = BASE_DIR / "docs"
 SCREENSHOTS_DIR = DOCS_DIR / "screenshots"
@@ -27,9 +26,27 @@ CSS_STYLES = """
     margin-right: 25mm;
     margin-top: 25mm;
     margin-bottom: 25mm;
+    @top-center {
+        content: "KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING";
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 7.5pt;
+        color: #555555;
+        letter-spacing: 0.5px;
+    }
     @bottom-right {
         content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
     }
+}
+
+@page :first {
+    margin-top: 18mm;
+    margin-bottom: 18mm;
+    margin-left: 38mm;
+    margin-right: 25mm;
+    @top-center { content: none; }
+    @bottom-right { content: none; }
 }
 
 *, *::before, *::after {
@@ -38,149 +55,128 @@ CSS_STYLES = """
 
 body {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 12pt;
-    line-height: 1.5;
+    font-size: 11.5pt;
+    line-height: 1.45;
     color: #000000;
     margin: 0;
     padding: 0;
     text-align: justify;
 }
 
-.page {
+.front-matter-page {
     page-break-after: always;
-    position: relative;
-    min-height: 100%;
+    break-after: page;
 }
 
-.cover-page {
-    page-break-after: always;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 980px;
-}
-
-.running-header {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 7.5pt;
-    color: #444444;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 0.5pt solid #888888;
-    padding-bottom: 4px;
-    margin-bottom: 18px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.running-footer {
-    position: absolute;
-    bottom: -15mm;
-    right: 0;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 11pt;
-    color: #222222;
+.chapter-block {
+    page-break-before: always;
+    break-before: page;
 }
 
 h1.chapter-title {
-    font-size: 16pt;
+    font-size: 15pt;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10pt;
+    margin-bottom: 16pt;
     color: #000000;
+    page-break-after: avoid;
+    break-after: avoid;
 }
 
 h2.section-heading {
-    font-size: 14pt;
+    font-size: 13pt;
     font-weight: bold;
-    margin-top: 18px;
-    margin-bottom: 8px;
+    margin-top: 14pt;
+    margin-bottom: 6pt;
     color: #000000;
+    page-break-after: avoid;
+    break-after: avoid;
 }
 
 h3.sub-heading {
-    font-size: 12pt;
+    font-size: 11.5pt;
     font-weight: bold;
-    margin-top: 14px;
-    margin-bottom: 6px;
+    margin-top: 10pt;
+    margin-bottom: 4pt;
     color: #000000;
+    page-break-after: avoid;
+    break-after: avoid;
 }
 
 p {
-    margin: 0 0 6pt 0;
+    margin: 0 0 5pt 0;
     text-align: justify;
     text-justify: inter-word;
 }
 
 ul, ol {
-    margin: 4pt 0 8pt 20pt;
+    margin: 3pt 0 6pt 18pt;
     padding: 0;
 }
 
 li {
-    margin-bottom: 4pt;
+    margin-bottom: 3pt;
     text-align: justify;
 }
 
 table.report-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 12pt 0;
-    font-size: 10pt;
-    page-break-inside: avoid;
+    margin: 6pt 0 8pt 0;
+    font-size: 9pt;
+    page-break-inside: auto;
 }
 
 table.report-table th {
     background-color: #f2f2f2;
     border: 1pt solid #444;
-    padding: 6pt 8pt;
+    padding: 4pt 6pt;
     text-align: left;
     font-weight: bold;
 }
 
 table.report-table td {
     border: 1pt solid #666;
-    padding: 5pt 8pt;
+    padding: 3.5pt 6pt;
     vertical-align: top;
 }
 
-.table-caption {
-    font-size: 10pt;
-    font-weight: bold;
-    margin-bottom: 4pt;
-    text-align: left;
+tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 .figure-box {
     text-align: center;
-    margin: 14pt 0;
+    margin: 6pt auto;
     page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 .figure-box img {
-    max-width: 95%;
-    height: auto;
+    max-height: 150px;
+    max-width: 86%;
     border: 1pt solid #bbb;
     border-radius: 2px;
+    object-fit: contain;
 }
 
 .figure-caption {
-    font-size: 10pt;
+    font-size: 9pt;
     font-weight: bold;
-    margin-top: 6pt;
+    margin-top: 3pt;
     text-align: center;
 }
 
 .equation-box {
-    margin: 10pt 0;
-    padding: 6pt 14pt;
+    margin: 8pt 0;
+    padding: 5pt 12pt;
     background: #fdfdfd;
     border: 1pt solid #ddd;
     font-family: 'Courier New', monospace;
-    font-size: 10pt;
+    font-size: 9.5pt;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -194,26 +190,20 @@ table.report-table td {
 }
 
 .signature-table td {
-    padding: 12px 6px;
+    padding: 10px 6px;
     vertical-align: top;
 }
 """
 
 def generate_report_html(target="team"):
-    """
-    target can be:
-    - 'team': both students
-    - 'sivaram': only Muppavarapu Sivaram
-    - 'lohith': only Meda Lohith Pavan Kumar
-    """
     if target == "team":
         students_cover = """
-        <div style="font-size: 12pt; font-weight: bold; margin-bottom: 4px;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
-        <div style="font-size: 12pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
+        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 3px;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
+        <div style="font-size: 11pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
         """
         students_inner = """
-        <div style="font-size: 12pt; font-weight: bold; margin-bottom: 4px;">Muppavarapu Sivaram (2300030447)</div>
-        <div style="font-size: 12pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
+        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 3px;">Muppavarapu Sivaram (2300030447)</div>
+        <div style="font-size: 11pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
         """
         students_decl = """
         <tr>
@@ -226,7 +216,7 @@ def generate_report_html(target="team"):
         </tr>
         """
         students_cert = """
-        <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 20px 0;">
+        <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 16px 0;">
             1. Muppavarapu Sivaram (2300030447)<br>
             2. Meda Lohith Pavan Kumar (2300030921)
         </div>
@@ -234,10 +224,10 @@ def generate_report_html(target="team"):
         title_suffix = "Team Copy"
     elif target == "sivaram":
         students_cover = """
-        <div style="font-size: 12pt; font-weight: bold;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
+        <div style="font-size: 11pt; font-weight: bold;">MUPPAVARAPU SIVARAM &nbsp;|&nbsp; 2300030447</div>
         """
         students_inner = """
-        <div style="font-size: 12pt; font-weight: bold;">Muppavarapu Sivaram (2300030447)</div>
+        <div style="font-size: 11pt; font-weight: bold;">Muppavarapu Sivaram (2300030447)</div>
         """
         students_decl = """
         <tr>
@@ -246,17 +236,17 @@ def generate_report_html(target="team"):
         </tr>
         """
         students_cert = """
-        <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 20px 0;">
+        <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 16px 0;">
             Muppavarapu Sivaram (2300030447)
         </div>
         """
         title_suffix = "Individual Copy - Muppavarapu Sivaram"
     else:
         students_cover = """
-        <div style="font-size: 12pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
+        <div style="font-size: 11pt; font-weight: bold;">MEDA LOHITH PAVAN KUMAR &nbsp;|&nbsp; 2300030921</div>
         """
         students_inner = """
-        <div style="font-size: 12pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
+        <div style="font-size: 11pt; font-weight: bold;">Meda Lohith Pavan Kumar (2300030921)</div>
         """
         students_decl = """
         <tr>
@@ -265,7 +255,7 @@ def generate_report_html(target="team"):
         </tr>
         """
         students_cert = """
-        <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 20px 0;">
+        <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 16px 0;">
             Meda Lohith Pavan Kumar (2300030921)
         </div>
         """
@@ -283,60 +273,53 @@ def generate_report_html(target="team"):
 <body>
 
 <!-- ================= PAGE 1: OUTER COVER PAGE ================= -->
-<div class="page cover-page">
-    <div>
-        <div style="margin-top: 15px; margin-bottom: 12px;">
-            <img src="{kl_logo_b64}" style="height: 95px; object-fit: contain;" alt="KL University Logo">
-        </div>
-        <div style="font-size: 13pt; font-weight: bold; color: #000; text-transform: uppercase; margin-bottom: 2px;">
-            KONERU LAKSHMAIAH EDUCATION FOUNDATION
-        </div>
-        <div style="font-size: 11pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
-            (DEEMED TO BE UNIVERSITY)
-        </div>
-        <div style="font-size: 11pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 25px;">
-            DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
-        </div>
-
-        <div style="font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; color: #000;">
-            FINAL PROJECT REPORT
-        </div>
-
-        <div style="font-size: 15pt; font-weight: bold; color: #103060; line-height: 1.35; padding: 0 10px; margin-bottom: 30px; text-transform: uppercase;">
-            SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
-        </div>
-
-        <div style="font-size: 11pt; margin-bottom: 8px;">Submitted by</div>
-        <div style="margin-bottom: 30px;">
-            {students_cover}
-        </div>
-
-        <div style="font-size: 11pt; margin-bottom: 6px;">Under the Guidance of</div>
-        <div style="font-size: 12pt; font-weight: bold; margin-bottom: 2px;">Dr. Koganti Sripath Roy</div>
-        <div style="font-size: 11pt; color: #222; margin-bottom: 2px;">Assistant Professor</div>
-        <div style="font-size: 11pt; color: #222; margin-bottom: 25px;">Department of EL&GE</div>
-
-        <div style="font-size: 11pt; font-weight: bold; margin-bottom: 2px;">Academic Year 2026–2027</div>
-        <div style="font-size: 11pt; color: #333; margin-bottom: 25px;">November, 2026</div>
+<div class="front-matter-page" style="text-align: center;">
+    <div style="margin-top: 5px; margin-bottom: 10px;">
+        <img src="{kl_logo_b64}" style="height: 70px; object-fit: contain;" alt="KL University Logo">
+    </div>
+    <div style="font-size: 12.5pt; font-weight: bold; color: #000; text-transform: uppercase; margin-bottom: 2px;">
+        KONERU LAKSHMAIAH EDUCATION FOUNDATION
+    </div>
+    <div style="font-size: 10.5pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
+        (DEEMED TO BE UNIVERSITY)
+    </div>
+    <div style="font-size: 10.5pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 18px;">
+        DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
     </div>
 
-    <!-- Bottom Box exactly matching template -->
-    <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 8px 12px; font-size: 9.5pt; text-align: center; border-radius: 4px; margin-bottom: 10px;">
+    <div style="font-size: 13.5pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18px; color: #000;">
+        FINAL PROJECT REPORT
+    </div>
+
+    <div style="font-size: 13.5pt; font-weight: bold; color: #103060; line-height: 1.35; padding: 0 10px; margin-bottom: 22px; text-transform: uppercase;">
+        SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
+    </div>
+
+    <div style="font-size: 10.5pt; margin-bottom: 4px;">Submitted by</div>
+    <div style="margin-bottom: 22px;">
+        {students_cover}
+    </div>
+
+    <div style="font-size: 10.5pt; margin-bottom: 4px;">Under the Guidance of</div>
+    <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 2px;">Dr. Koganti Sripath Roy</div>
+    <div style="font-size: 10.5pt; color: #222; margin-bottom: 2px;">Assistant Professor</div>
+    <div style="font-size: 10.5pt; color: #222; margin-bottom: 18px;">Department of EL&GE</div>
+
+    <div style="font-size: 10.5pt; font-weight: bold; margin-bottom: 2px;">Academic Year 2026–2027</div>
+    <div style="font-size: 10pt; color: #333; margin-bottom: 18px;">November, 2026</div>
+
+    <!-- Bottom Box firmly inside page 1 -->
+    <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 7px 12px; font-size: 9pt; text-align: center; border-radius: 4px; margin-top: 10px;">
         <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> KL - KLUG &nbsp;|&nbsp; <strong>Cluster:</strong> Cluster A - Software Systems Engineering</div>
-        <div style="margin-top: 3px;"><strong>Domain:</strong> Real-Time Communication, WebRTC & Bandwidth-Frugal Distributed Systems</div>
+        <div style="margin-top: 2px;"><strong>Domain:</strong> Real-Time Communication, WebRTC & Bandwidth-Frugal Distributed Systems</div>
     </div>
 </div>
 
 
 <!-- ================= PAGE 2: INNER TITLE PAGE ================= -->
-<div class="page" style="text-align: center;">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 2</span>
-    </div>
-
-    <div style="margin-top: 15px; margin-bottom: 10px;">
-        <img src="{kl_logo_b64}" style="height: 85px; object-fit: contain;" alt="KL University Logo">
+<div class="front-matter-page" style="text-align: center;">
+    <div style="margin-top: 10px; margin-bottom: 10px;">
+        <img src="{kl_logo_b64}" style="height: 65px; object-fit: contain;" alt="KL University Logo">
     </div>
     <div style="font-size: 12pt; font-weight: bold; color: #000; text-transform: uppercase;">
         KONERU LAKSHMAIAH EDUCATION FOUNDATION
@@ -344,88 +327,78 @@ def generate_report_html(target="team"):
     <div style="font-size: 10.5pt; font-weight: bold; color: #222; text-transform: uppercase; margin-bottom: 2px;">
         (DEEMED TO BE UNIVERSITY)
     </div>
-    <div style="font-size: 10.5pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 25px;">
+    <div style="font-size: 10.5pt; font-weight: bold; color: #1a1a1a; text-transform: uppercase; margin-bottom: 20px;">
         DEPARTMENT OF EXPERIENTIAL LEARNING AND GLOBAL ENGAGEMENT
     </div>
 
-    <div style="font-size: 14.5pt; font-weight: bold; color: #103060; line-height: 1.35; margin-bottom: 20px; text-transform: uppercase; padding: 0 15px;">
+    <div style="font-size: 13.5pt; font-weight: bold; color: #103060; line-height: 1.35; margin-bottom: 18px; text-transform: uppercase; padding: 0 15px;">
         SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM
     </div>
 
-    <p style="text-align: center; font-size: 11pt; margin-bottom: 6px;">
+    <p style="text-align: center; font-size: 10.5pt; margin-bottom: 4px;">
         A Capstone Project Report submitted in partial fulfilment of the requirements for the award of the degree of
     </p>
-    <div style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 2px;">
+    <div style="font-size: 11.5pt; font-weight: bold; text-transform: uppercase; margin-bottom: 2px;">
         BACHELOR OF TECHNOLOGY
     </div>
-    <div style="font-size: 11pt; margin-bottom: 25px;">
+    <div style="font-size: 10.5pt; margin-bottom: 22px;">
         in <strong>COMPUTER SCIENCE AND ENGINEERING</strong>
     </div>
 
-    <div style="font-size: 11pt; margin-bottom: 8px;">Submitted by</div>
-    <div style="margin-bottom: 30px;">
+    <div style="font-size: 10.5pt; margin-bottom: 6px;">Submitted by</div>
+    <div style="margin-bottom: 24px;">
         {students_inner}
     </div>
 
-    <div style="font-size: 11pt; margin-bottom: 6px;">Faculty Guide:</div>
-    <div style="font-size: 12pt; font-weight: bold; margin-bottom: 2px;">Dr. KOGANTI SRIPATH ROY</div>
-    <div style="font-size: 11pt; color: #222; margin-bottom: 25px;">Professor, Department of EL&GE</div>
+    <div style="font-size: 10.5pt; margin-bottom: 4px;">Faculty Guide:</div>
+    <div style="font-size: 11.5pt; font-weight: bold; margin-bottom: 2px;">Dr. KOGANTI SRIPATH ROY</div>
+    <div style="font-size: 10.5pt; color: #222; margin-bottom: 22px;">Professor, Department of EL&GE</div>
 
-    <div style="font-size: 11pt; font-weight: bold; margin-top: 30px;">Academic Year 2026–2027</div>
+    <div style="font-size: 10.5pt; font-weight: bold; margin-top: 20px;">Academic Year 2026–2027</div>
 </div>
 
 
 <!-- ================= PAGE 3: STUDENT DECLARATION ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 3</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-        <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+<div class="front-matter-page">
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 20px;">
+        <h2 style="font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
             STUDENT DECLARATION AND ORIGINALITY STATEMENT
         </h2>
     </div>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         We declare that this capstone report titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is a record of the project work carried out by the undersigned team under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement. We confirm that the implementation details, results and claims included in the final submitted version will be checked against the team's source code, experiment records and research diary. All external ideas and materials will be acknowledged through appropriate citations. Any AI-assisted contribution will be disclosed in the responsible-use statement.
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 40px;">
+    <p style="line-height: 1.55; margin-bottom: 30px;">
         We understand that the declaration must be signed by all team members and that the university may require an originality/plagiarism report.
     </p>
 
-    <table style="width: 100%; border-collapse: collapse; margin-top: 30px;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 25px;">
         {students_decl}
     </table>
 </div>
 
 
 <!-- ================= PAGE 4: CERTIFICATE ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 4</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-        <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+<div class="front-matter-page">
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 20px;">
+        <h2 style="font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
             CERTIFICATE
         </h2>
     </div>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         This is to certify that the capstone project report entitled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM"</strong> is submitted by the students listed below, in partial fulfilment of the requirements for the academic project work under the <strong>Department of Experiential Learning and Global Engagement</strong>, Koneru Lakshmaiah Education Foundation (Deemed to be University), during the Academic Year 2026-2027.
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 20px;">
+    <p style="line-height: 1.55; margin-bottom: 16px;">
         The project work was carried out under the guidance of <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement. The final certification is subject to verification of the submitted implementation, research diary, review-gate records and evidence package.
     </p>
 
     {students_cert}
 
-    <table class="signature-table" style="margin-top: 60px;">
+    <table class="signature-table" style="margin-top: 45px;">
         <tr>
             <td style="width: 50%;">
                 <strong>Faculty Guide:</strong> ____________________<br><br>
@@ -437,7 +410,7 @@ def generate_report_html(target="team"):
             </td>
         </tr>
         <tr>
-            <td colspan="2" style="padding-top: 40px;">
+            <td colspan="2" style="padding-top: 35px;">
                 <strong>External Examiner:</strong> ____________________<br><br>
                 <strong>Date:</strong> __________
             </td>
@@ -447,61 +420,51 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= PAGE 5: ACKNOWLEDGEMENTS ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 5</span>
-    </div>
-
-    <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-        <h2 style="font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+<div class="front-matter-page">
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 20px;">
+        <h2 style="font-size: 13pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
             ACKNOWLEDGEMENTS
         </h2>
     </div>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         The team expresses its sincere gratitude to the faculty guide, <strong>Dr. Koganti Sripath Roy</strong>, Assistant Professor, Department of Experiential Learning and Global Engagement, for his valuable guidance, continuous support, and academic encouragement throughout the development of the project titled <strong>"SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM."</strong>
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         The team would like to express its heartfelt gratitude to <strong>Dr. T. K. Rama Krishna Rao</strong>, Principal, College of Engineering; <strong>Dr. S. V. Aswin Kumer</strong>, HoD, EL&GE; and <strong>Dr. P. Gopi Krishna</strong>, Alternate HoD, for their valuable support, encouragement, and administrative guidance throughout the project.
     </p>
 
-    <p style="line-height: 1.6; margin-bottom: 16px;">
+    <p style="line-height: 1.55; margin-bottom: 14px;">
         The team also sincerely acknowledges the <strong>Department of Experiential Learning and Global Engagement</strong> and <strong>Koneru Lakshmaiah Education Foundation (Deemed to be University)</strong> for providing the academic environment in which the capstone work was undertaken. The team thanks all faculty members and individuals who provided feedback during project reviews and evaluation.
     </p>
 </div>
 
 
 <!-- ================= PAGE 6: STRUCTURED ABSTRACT & PROJECT AT A GLANCE ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 6</span>
-    </div>
+<div class="front-matter-page">
+    <h1 class="chapter-title" style="margin-top: 5pt; margin-bottom: 10pt;">STRUCTURED ABSTRACT</h1>
 
-    <h1 class="chapter-title" style="margin-top: 10px;">STRUCTURED ABSTRACT</h1>
-
-    <table class="report-table">
+    <table class="report-table" style="margin: 4pt 0 8pt 0;">
         <tr>
             <th style="width: 28%;">Component</th>
             <th style="width: 72%;">Description</th>
         </tr>
         <tr>
             <td><strong>Problem & Stakeholder Need</strong></td>
-            <td>Commercial video conferencing tools (Zoom, Meet, Teams) impose heavy monthly per-host fees, consume 600–1800 kbps, drop calls on rural 2G/EDGE networks with high packet loss, and fail to retain spoken regional Telugu/English knowledge for rural students and non-profit volunteers.</td>
+            <td>Commercial video tools (Zoom/Meet) impose heavy recurring host fees, consume 600–1800 kbps, drop calls on rural 2G/EDGE networks, and fail to retain spoken regional Telugu/English knowledge for rural learners and volunteers.</td>
         </tr>
         <tr>
             <td><strong>Approved Mandate & Delivery</strong></td>
-            <td>To architect, implement, benchmark, and deploy a self-hosted, bandwidth-frugal real-time meeting and digital knowledge platform (Swecha Vedika) running on Docker Compose on modest VPS hardware with zero recurring licensing overhead.</td>
+            <td>To architect, implement, benchmark, and deploy an open-source, bandwidth-frugal real-time meeting platform (Swecha Vedika) running on Docker Compose on modest VPS hardware with zero recurring licensing overhead.</td>
         </tr>
         <tr>
-            <td><strong>Engineering Method & Realisation</strong></td>
-            <td>Hybrid Selective Forwarding Unit (SFU) on LiveKit WebRTC, client-side 2G Low-Data mode with prioritized Opus audio, Meta WhatsApp FSM gateway for conversational stage Q&A, server-synchronized Replay-as-Live broadcasting, and in-browser real-time speech-to-text with Whisper ASR archiving.</td>
+            <td><strong>Engineering Method</strong></td>
+            <td>Hybrid Selective Forwarding Unit (SFU) on LiveKit WebRTC, client-side 2G Low-Data mode with prioritized Opus audio, Meta WhatsApp FSM gateway, server-synchronized Replay-as-Live broadcasting, and in-browser speech-to-text with Whisper ASR archiving.</td>
         </tr>
         <tr>
             <td><strong>Quantitative Results</strong></td>
-            <td>Achieved <strong>44.8 kbps</strong> downlink (an <strong>85.21% bandwidth reduction</strong> over standard 303 kbps WebRTC and 68.4% reduction over standard SFU video); sustained voice intelligibility under <strong>35% simulated packet loss</strong>; API mean latency <strong>2.9–18.2 ms</strong> under 50 concurrent requests.</td>
+            <td>Achieved <strong>44.8 kbps</strong> downlink (an <strong>85.21% bandwidth reduction</strong> over standard 303 kbps WebRTC and 68.4% reduction over standard SFU video); voice intelligible under <strong>35% simulated packet loss</strong>; API mean latency <strong>2.9–18.2 ms</strong> under 50 concurrent requests.</td>
         </tr>
         <tr>
             <td><strong>Original Contribution</strong></td>
@@ -517,24 +480,18 @@ def generate_report_html(target="team"):
         </tr>
     </table>
 
-    <h2 class="section-heading" style="margin-top: 15px;">Project at a Glance</h2>
-    <div style="border: 1pt solid #bbb; background: #fafafa; padding: 10px; font-size: 9pt; border-radius: 4px;">
-        <div style="font-weight: bold; margin-bottom: 4px; color: #103060;">Cluster A Software Architecture Flow:</div>
+    <div style="border: 1pt solid #bbb; background: #fafafa; padding: 7px 10px; font-size: 8.5pt; border-radius: 4px; margin-top: 6pt;">
+        <div style="font-weight: bold; margin-bottom: 2px; color: #103060;">Cluster A Software Architecture Flow:</div>
         <div><strong>Rural Stakeholder Problem:</strong> High cost, 2G bandwidth dropouts, zero Telugu knowledge retention.</div>
-        <div style="margin-top: 2px;"><strong>Actor & Input Channels:</strong> Desktop/Mobile Browser (WebRTC) &bull; Edge Mobile Device (Sub-50 kbps) &bull; WhatsApp Mobile (Text FSM).</div>
-        <div style="margin-top: 2px;"><strong>Microservices:</strong> LiveKit Media SFU (Ports 7880-7882) &bull; FastAPI Core (Port 8000) &bull; PostgreSQL 16 (Port 5432) &bull; React 18 UI.</div>
-        <div style="margin-top: 2px;"><strong>Key Metrics:</strong> 44.8 kbps 2G Bitrate &bull; 35% Packet Loss Resilience &bull; 100% Test Pass Rate &bull; Zero Recurring SaaS Cost.</div>
+        <div><strong>Actor & Input Channels:</strong> Desktop/Mobile Browser (WebRTC) &bull; Edge Mobile Device (Sub-50 kbps) &bull; WhatsApp Mobile (Text FSM).</div>
+        <div><strong>Microservices:</strong> LiveKit Media SFU (Ports 7880-7882) &bull; FastAPI Core (Port 8000) &bull; PostgreSQL 16 (Port 5432) &bull; React 18 UI.</div>
+        <div><strong>Key Metrics:</strong> 44.8 kbps 2G Bitrate &bull; 35% Packet Loss Resilience &bull; 100% Test Pass Rate &bull; Zero Recurring SaaS Cost.</div>
     </div>
 </div>
 
 
 <!-- ================= CHAPTER 1 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 7</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 1<br>PROJECT CONTEXT, PROBLEM DEFINITION AND OBJECTIVES</h1>
 
     <h2 class="section-heading">1.1 Project Identity</h2>
@@ -642,12 +599,7 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= CHAPTER 2 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 8</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 2<br>LITERATURE REVIEW, EXISTING SOLUTIONS AND IDENTIFIED GAP</h1>
 
     <h2 class="section-heading">2.1 Review Protocol and Technical Standards</h2>
@@ -656,7 +608,7 @@ def generate_report_html(target="team"):
     </p>
 
     <h2 class="section-heading">2.2 Comparison Matrix Against Existing Systems</h2>
-    <table class="report-table">
+    <table class="report-table" style="font-size: 8.5pt; margin: 4pt 0 6pt 0;">
         <tr>
             <th style="width: 18%;">Dimension</th>
             <th style="width: 26%;">Commercial SaaS<br>(Zoom / Google Meet)</th>
@@ -709,12 +661,7 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= CHAPTER 3 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 9</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 3<br>REQUIREMENTS SPECIFICATION AND ACCEPTANCE CRITERIA</h1>
 
     <h2 class="section-heading">3.1 Functional Requirements (REQ-F)</h2>
@@ -780,12 +727,7 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= CHAPTER 4 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 10</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 4<br>SYSTEM ARCHITECTURE, DATA DESIGN AND ENGINEERING DECISIONS</h1>
 
     <h2 class="section-heading">4.1 Containerized 4-Tier Distributed Architecture</h2>
@@ -835,12 +777,7 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= CHAPTER 5 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 11</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 5<br>SYSTEM IMPLEMENTATION, INTEGRATION AND DEPLOYMENT</h1>
 
     <h2 class="section-heading">5.1 Implementation Evidence and Operational UI</h2>
@@ -858,7 +795,7 @@ def generate_report_html(target="team"):
         <div class="figure-caption">Figure 5.2: Interactive Sidebar with Stage Moderation, Real-Time Q&A Upvote Queue, and Live Community Polls.</div>
     </div>
 
-    <h2 class="section-heading">5.2 Conversational WhatsApp Bot and Speech-to-Text Implementation</h2>
+    <h2 class="section-heading" style="page-break-before: always; margin-top: 10pt;">5.2 Conversational WhatsApp Bot and Speech-to-Text Implementation</h2>
     <p>
         The WhatsApp Front-Door Bot provides instant access for rural mobile participants, parsing user intents through a deterministic FSM and injecting live questions into the stage queue:
     </p>
@@ -876,12 +813,7 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= CHAPTER 6 & 7 ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 12</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 6 & 7<br>VERIFICATION, BENCHMARKING AND PERFORMANCE EVALUATION</h1>
 
     <h2 class="section-heading">6.1 Automated Test Suite Verification</h2>
@@ -990,12 +922,7 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= CHAPTER 8 & 9: RUBRICS & OUTCOMES ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 13</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 8 & 9<br>OUTCOMES, IMPACT AND REVIEW DEFENSE RUBRIC</h1>
 
     <h2 class="section-heading">8.1 UN Sustainable Development Goals (SDG) Alignment</h2>
@@ -1005,8 +932,8 @@ def generate_report_html(target="team"):
         <li><strong>SDG 10 (Reduced Inequalities):</strong> Democratizes regional language representation via automated Telugu speech corpus generation.</li>
     </ul>
 
-    <h2 class="section-heading">9.1 Capstone Project-I Evaluation Rubric Defense</h2>
-    <table class="report-table">
+    <h2 class="section-heading" style="page-break-before: always; margin-top: 10pt;">9.1 Capstone Project-I Evaluation Rubric Defense</h2>
+    <table class="report-table" style="font-size: 8.5pt; margin: 4pt 0 6pt 0;">
         <tr>
             <th style="width: 25%;">Evaluation Rubric</th>
             <th style="width: 55%;">Project Evidence & Defence Points</th>
@@ -1057,12 +984,7 @@ def generate_report_html(target="team"):
 
 
 <!-- ================= CHAPTER 10 & REFERENCES ================= -->
-<div class="page">
-    <div class="running-header">
-        <span>KL UNIVERSITY | CAPSTONE FINAL REPORT | CLUSTER A - SOFTWARE SYSTEMS ENGINEERING</span>
-        <span>Page 14</span>
-    </div>
-
+<div class="chapter-block">
     <h1 class="chapter-title">CHAPTER 10<br>CONCLUSIONS AND FUTURE WORK</h1>
 
     <h2 class="section-heading">10.1 Conclusions</h2>
@@ -1077,8 +999,8 @@ def generate_report_html(target="team"):
         <li><strong>Vector Slide Diffing:</strong> Transmitting presentation slide coordinates rather than video pixels to drop screen-sharing bandwidth below 20 kbps.</li>
     </ul>
 
-    <h2 class="section-heading" style="margin-top: 25px;">REFERENCES</h2>
-    <ol style="font-size: 9.5pt; line-height: 1.45; padding-left: 18px;">
+    <h2 class="section-heading" style="margin-top: 18pt;">REFERENCES</h2>
+    <ol style="font-size: 9pt; line-height: 1.45; padding-left: 18px;">
         <li>C. Perkins, <em>RTP: Audio and Video for the Internet</em>, Addison-Wesley Professional, Boston, MA, 2003.</li>
         <li>H. Schulzrinne, S. Casner, R. Frederick, and V. Jacobson, "RTP: A Transport Protocol for Real-Time Applications," <em>IETF RFC 3550</em>, 2003.</li>
         <li>LiveKit Contributors, "LiveKit: Open Source Real-Time Video and Audio Infrastructure," [Online]. Available: https://livekit.io, 2024.</li>
@@ -1115,13 +1037,13 @@ def main():
             f.write(html_content)
 
         print(f"Compiling PDF: {pdf_name} via Microsoft Edge headless...")
-        file_uri = "file:///" + str(html_path).replace("\\", "/")
+        file_uri = "file:///" + str(html_path.resolve()).replace("\\", "/")
         cmd = [
             edge_bin,
             "--headless=new",
             "--disable-gpu",
             "--no-pdf-header-footer",
-            f"--print-to-pdf={pdf_path}",
+            f"--print-to-pdf={pdf_path.resolve()}",
             file_uri
         ]
         subprocess.run(cmd, check=True)
