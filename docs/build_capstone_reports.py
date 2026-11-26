@@ -322,7 +322,7 @@ def generate_report_html(target="team"):
 
     <!-- Bottom Box exactly matching template -->
     <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 8px 12px; font-size: 9.5pt; text-align: center; border-radius: 4px; margin-bottom: 10px;">
-        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> Y23-ELGE-CAP-08 &nbsp;|&nbsp; <strong>Cluster:</strong> Cluster A - Software Systems Engineering</div>
+        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> KL - KLUG &nbsp;|&nbsp; <strong>Cluster:</strong> Cluster A - Software Systems Engineering</div>
         <div style="margin-top: 3px;"><strong>Domain:</strong> Real-Time Communication, WebRTC & Bandwidth-Frugal Distributed Systems</div>
     </div>
 </div>
@@ -543,7 +543,7 @@ def generate_report_html(target="team"):
         <strong>Project Title:</strong> SWECHA VEDIKA: A BANDWIDTH-FRUGAL, MULTILINGUAL LIVE STAGE AND KNOWLEDGE PLATFORM<br>
         <strong>Dominant Specialization:</strong> Cloud, Distributed Systems & Real-Time Media Communications<br>
         <strong>Cluster:</strong> Cluster A - Software Systems Engineering<br>
-        <strong>Team Number:</strong> Y23-ELGE-CAP-08<br>
+        <strong>Team Name / Number:</strong> KL - KLUG<br>
         <strong>Investigating Students:</strong> Muppavarapu Sivaram (2300030447) and Meda Lohith Pavan Kumar (2300030921)<br>
         <strong>Faculty Supervisor:</strong> Dr. Koganti Sripath Roy, Department of EL&GE
     </p>
