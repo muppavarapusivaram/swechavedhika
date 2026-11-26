@@ -73,7 +73,7 @@ def stamp_headers_and_footers(raw_pdf_path, final_pdf_path):
         rect_header = pymupdf.Rect(54, 24, 595 - 54, 45)
         page.insert_textbox(
             rect_header,
-            "KL UNIVERSITY   |   CAPSTONE FINAL REPORT   |   CLUSTER A - SOFTWARE SYSTEMS ENGINEERING",
+            "KL UNIVERSITY   |   CAPSTONE FINAL REPORT   |   BLOCKCHAIN & CYBER SECURITY SYSTEMS",
             fontsize=7.5,
             fontname="helv",
             align=pymupdf.TEXT_ALIGN_CENTER,

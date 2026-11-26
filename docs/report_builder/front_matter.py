@@ -100,8 +100,8 @@ def get_front_matter_html(target, kl_logo_b64):
 
     <!-- Bottom Box firmly inside page 1 -->
     <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 6px 10px; font-size: 8.5pt; text-align: center; border-radius: 4px; line-height: 1.35;">
-        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> KL - KLUG &nbsp;|&nbsp; <strong>Cluster:</strong> Cluster A - Software Systems Engineering</div>
-        <div style="margin-top: 2px;"><strong>Domain:</strong> Real-Time Communication, WebRTC & Bandwidth-Frugal Distributed Systems</div>
+        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> Y23-HTE KL-KLUG</div>
+        <div style="margin-top: 2px;"><strong>Domain:</strong> Blockchain & Cyber Security Systems</div>
     </div>
 </div>
 

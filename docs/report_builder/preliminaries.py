@@ -48,12 +48,12 @@ def get_preliminary_sections_html(target):
             <td>Swecha Vedika: A Bandwidth-Frugal, Multilingual Live Stage and Knowledge Platform</td>
         </tr>
         <tr>
-            <td><strong>Academic Cluster</strong></td>
-            <td>Cluster A – Software Systems Engineering (CSE / EL&GE), KL University</td>
+            <td><strong>Team Name</strong></td>
+            <td>Y23-HTE KL-KLUG</td>
         </tr>
         <tr>
             <td><strong>Engineering Domain</strong></td>
-            <td>Real-Time Communication (WebRTC), Distributed Media SFU & Conversational AI</td>
+            <td>Blockchain & Cyber Security Systems</td>
         </tr>
         <tr>
             <td><strong>Core Problem</strong></td>
@@ -109,7 +109,7 @@ def get_preliminary_sections_html(target):
 
     <h2 class="section-heading" style="margin-top: 8pt;">1. Documented Team Integration Contributions</h2>
     <p>
-        The Swecha Vedika capstone project was executed by a collaborative engineering team consisting of two undergraduate students under Cluster A – Software Systems Engineering. Both members actively participated in architectural ideation, system modeling, software development, testing, and report synthesis.
+        The Swecha Vedika capstone project was executed by a collaborative engineering team (Team: <strong>Y23-HTE KL-KLUG</strong>) consisting of two undergraduate students under the Department of Experiential Learning and Global Engagement (EL&GE). Both members actively participated in architectural ideation, system modeling, software development, testing, and report synthesis.
     </p>
 
     <table class="report-table" style="font-size: 8pt; margin-top: 6pt;">

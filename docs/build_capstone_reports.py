@@ -310,8 +310,8 @@ def generate_report_html(target="team"):
 
     <!-- Bottom Box firmly inside page 1 -->
     <div style="border: 1pt solid #7090b0; background-color: #f4f8fc; padding: 7px 12px; font-size: 9pt; text-align: center; border-radius: 4px; margin-top: 10px;">
-        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> KL - KLUG &nbsp;|&nbsp; <strong>Cluster:</strong> Cluster A - Software Systems Engineering</div>
-        <div style="margin-top: 2px;"><strong>Domain:</strong> Real-Time Communication, WebRTC & Bandwidth-Frugal Distributed Systems</div>
+        <div><strong>Project:</strong> Swecha Vedika &nbsp;|&nbsp; <strong>Team:</strong> Y23-HTE KL-KLUG</div>
+        <div style="margin-top: 2px;"><strong>Domain:</strong> Blockchain & Cyber Security Systems</div>
     </div>
 </div>
 
