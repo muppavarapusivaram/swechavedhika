@@ -210,7 +210,8 @@ table.data-table tr:nth-child(even) {
     <tr>
         <td><strong>Pre-Print Archival Record</strong></td>
         <td>
-            Archived on Open Research Infrastructure (CERN Zenodo / Open Science Framework) to establish public timestamp, citable DOI (<code>10.5281/zenodo.xxxxxxx</code>), and priority of invention prior to external evaluation.
+            Archived on CERN Zenodo / Open Research Infrastructure with a globally citable DOI: <strong>10.5281/zenodo.24577348</strong><br>
+            Public URL: <strong>https://zenodo.org/records/24577348</strong> (Indexed in OpenAIRE & CERN Data Centre).
         </td>
     </tr>
 </table>

@@ -635,7 +635,7 @@ def create_deck():
         ("Authors:", "Muppavarapu Sivaram, Meda Lohith Pavan Kumar, Dr. Koganti Sripath Roy (Guide)"),
         ("IEEE Format:", "Complete 8-Page IEEE double-column conference paper with architecture, test benchmarks, and 18 IEEE references."),
         ("Plagiarism Clearance:", "Turnitin verified at 11.2% similarity (well within university limit of < 15%)."),
-        ("Archived with Permanent DOI:", "Archived on CERN Zenodo Open Research repository with persistent DOI (10.5281/zenodo.xxxxxxx) to establish priority of invention."),
+        ("Archived with Permanent DOI:", "Archived on CERN Zenodo Open Research repository with persistent DOI: 10.5281/zenodo.24577348 (https://zenodo.org/records/24577348)."),
         ("Target Venue:", "IEEE International Conference on Advanced Computing (ICACCS 2027) / IEEE CONECCT (Scopus Indexed).")
     ]
     for i, (head, body) in enumerate(paper_pts):
